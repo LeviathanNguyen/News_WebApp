@@ -1,4 +1,14 @@
 {
+  "type": "module",
+  "name": "news_express",
+  "version": "1.0.0",
+  "main": "/src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
@@ -8,6 +18,7 @@
     "express-session": "^1.18.1",
     "handlebars": "^4.7.8",
     "mongoose": "^8.9.1",
+    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.5",
     "nodemailer": "^6.9.16",

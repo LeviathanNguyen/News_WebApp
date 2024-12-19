@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import bcrypt from "bcrypt";
-const { sequelize } = require("../config/database")
+import { sequelize } from "../config/database"
 
 class User extends Model {
     // Validate user's password

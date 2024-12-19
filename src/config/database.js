@@ -1,5 +1,5 @@
+import "dotenv/config"
 import { Sequelize } from "sequelize";
-require("dotenv").config();
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -16,7 +16,7 @@ const sequelize = new Sequelize(
             idle: 10000
         },
         logging: process.env.NODE_ENV === "development" ? console.log : false,
-        timezone: "+07.00",
+        timezone: "+07:00",
         define: {
             charset: "utf8mb4",
             collate: "utf8mb4_unicode_ci",
@@ -46,8 +46,4 @@ const syncDatabase = async (force = false) => {
     }
 };
 
-module.exports = {
-    sequelize,
-    testConnection,
-    syncDatabase
-};
+export {sequelize, testConnection, syncDatabase };

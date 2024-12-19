@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-const { sequelize } = require("../config/database");
+import { sequelize } from "../config/database";
 
 class Article extends Model {
     // Check if article is premium content
@@ -108,7 +108,4 @@ Article.belongsTo(User, {
     as: "author"
 });
 
-module.exports = {
-    User,
-    Article
-}
+export { User, Article };

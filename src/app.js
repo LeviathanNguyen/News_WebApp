@@ -1,13 +1,20 @@
+import "dotenv/config"
 import express from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 import morgan from "morgan";
 import session from "express-session";
 import passport from "passport";
 import { Sequelize } from "sequelize";
-require("dotenv").config();
+import { testConnection } from "./config/database.js"
+
+import articleRoutes from "./routes/article.routes.js"
+import authRoutes from "./routes/auth.routes.js"
+import adminRoutes from "./routes/admin.routes.js"
+import editorRoutes from "./routes/editor.routes.js"
 
 const app = express();
-const { testConnection } = require("./config/database")
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Middleware
 app.use(morgan("dev"));
@@ -31,10 +38,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use("/", require("./routes/article.routes"));
-app.use("/auth", require("./routes/auth.routes"));
-app.use("/admin", require("./routes/admin.routes"));
-app.use("/editor", require("./routes/editor.routes"));
+app.use("/", articleRoutes);
+app.use("/auth", authRoutes);
+app.use("/admin", adminRoutes);
+app.use("/editor", editorRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {
