@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Lỗi hệ thống</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3 text-center">
+                <h1 class="text-danger mb-4">Đã có lỗi xảy ra</h1>
+                <% if (locals.error_msg) { %>
+                    <div class="alert alert-danger">
+                        <%= error_msg %>
+                    </div>
+                <% } %>
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home"></i> Quay về trang chủ
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

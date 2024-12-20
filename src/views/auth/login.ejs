@@ -1,0 +1,96 @@
+<%- contentFor('body') %>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4"><i class="fas fa-sign-in-alt"></i> Đăng nhập</h2>
+                
+                <form id="loginForm" method="POST" action="/api/auth/login">
+                    <!-- Email -->
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <label for="password"><i class="fas fa-lock"></i> Mật khẩu</label>
+                        <div class="form-text text-end">
+                            <a href="/auth/forgot-password" class="text-decoration-none">Quên mật khẩu?</a>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 mb-3">
+                        <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                    </button>
+
+                    <p class="text-center mb-0">
+                        Chưa có tài khoản? 
+                        <a href="/auth/register" class="text-decoration-none">Đăng ký ngay</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- contentFor('scripts') %>
+<script>
+$(document).ready(function() {
+    $('#loginForm').submit(function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            email: $('#email').val(),
+            password: $('#password').val(),
+            rememberMe: $('#rememberMe').is(':checked')
+        };
+
+        fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '/';
+            } else {
+                Toastify({
+                    text: data.message || "Đăng nhập thất bại",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#ff6b6b",
+                }).showToast();
+            }
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            Toastify({
+                text: "Có lỗi xảy ra khi đăng nhập",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#ff6b6b",
+            }).showToast();
+        });
+    });
+});
+</script>

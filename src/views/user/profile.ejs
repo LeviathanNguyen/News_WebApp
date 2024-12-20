@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Thông tin cá nhân</title>
+</head>
+<body>
+    <div class="row">
+        <!-- Profile Info -->
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Thông tin cá nhân</h3>
+                    
+                    <form id="profileForm">
+                        <!-- Username (readonly) -->
+                        <div class="mb-3">
+                            <label class="form-label">Tên đăng nhập</label>
+                            <input type="text" class="form-control" value="<%= user.username %>" readonly>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="<%= user.email %>" required>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" id="fullname" name="fullname" 
+                                   value="<%= user.fullname %>" required>
+                        </div>
+
+                        <!-- Nickname -->
+                        <div class="mb-3">
+                            <label for="nickname" class="form-label">Bút danh</label>
+                            <input type="text" class="form-control" id="nickname" name="nickname" 
+                                   value="<%= user.nickname || '' %>">
+                        </div>
+
+                        <!-- Date of Birth -->
+                        <div class="mb-3">
+                            <label for="dob" class="form-label">Ngày sinh</label>
+                            <input type="date" class="form-control" id="dob" name="dob" 
+                                   value="<%= user.dob ? new Date(user.dob).toISOString().split('T')[0] : '' %>">
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Lưu thay đổi
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Card -->
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">Đổi mật khẩu</h3>
+                    
+                    <form id="passwordForm">
+                        <!-- Current Password -->
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Mật khẩu hiện tại</label>
+                            <input type="password" class="form-control" id="currentPassword" 
+                                   name="currentPassword" required>
+                        </div>
+
+                        <!-- New Password -->
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                            <input type="password" class="form-control" id="newPassword" 
+                                   name="newPassword" required minlength="8">
+                            <div class="form-text">
+                                Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt
+                            </div>
+                        </div>
+
+                        <!-- Confirm New Password -->
+                        <div class="mb-3">
+                            <label for="confirmNewPassword" class="form-label">Xác nhận mật khẩu mới</label>
+                            <input type="password" class="form-control" id="confirmNewPassword" 
+                                   name="confirmNewPassword" required>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-key"></i> Đổi mật khẩu
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Handle profile update
+        document.getElementById('profileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                email: document.getElementById('email').value,
+                fullname: document.getElementById('fullname').value,
+                nickname: document.getElementById('nickname').value || null,
+                dob: document.getElementById('dob').value || null
+            };
+
+            try {
+                const response = await fetch('/api/user/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Cập nhật thông tin thành công!');
+                    location.reload();
+                } else {
+                    alert(data.message || 'Cập nhật thất bại');
+                }
+            } catch (error) {
+                console.error('Update profile error:', error);
+                alert('Có lỗi xảy ra khi cập nhật thông tin');
+            }
+        });
+
+        // Handle password change
+        document.getElementById('passwordForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+            
+            if (newPassword !== confirmNewPassword) {
+                alert('Mật khẩu mới xác nhận không khớp');
+                return;
+            }
+
+            const formData = {
+                currentPassword: document.getElementById('currentPassword').value,
+                newPassword: newPassword
+            };
+
+            try {
+                const response = await fetch('/api/user/change-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('Đổi mật khẩu thành công!');
+                    document.getElementById('passwordForm').reset();
+                } else {
+                    alert(data.message || 'Đổi mật khẩu thất bại');
+                }
+            } catch (error) {
+                console.error('Change password error:', error);
+                alert('Có lỗi xảy ra khi đổi mật khẩu');
+            }
+        });
+    </script>
+</body>
+</html>

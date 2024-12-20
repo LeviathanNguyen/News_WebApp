@@ -1,0 +1,15 @@
+<%- include('../layouts/main', { title: 'Reset Password', content: '' }) %>
+
+<div class="auth-form">
+    <h2>Reset Password</h2>
+    <form action="/api/password/reset" method="POST">
+        <input type="hidden" name="email" value="<%= email %>">
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" name="otp" required>
+        
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+        
+        <button type="submit">Reset Password</button>
+    </form>
+</div>
