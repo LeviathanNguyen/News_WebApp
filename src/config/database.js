@@ -1,4 +1,4 @@
-import "dotenv/config"
+import "dotenv/config";
 import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(
@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
     process.env.DB_PASSWORD,
     {
         host: process.env.HOST,
-        port: process.env.PORT,
+        port: process.env.DB_PORT,
         dialect: "mysql",
         pool: {
             max: 7,
