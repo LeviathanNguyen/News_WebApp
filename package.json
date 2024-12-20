@@ -1,13 +1,24 @@
 {
+<<<<<<< HEAD
   "name": "news_app",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+=======
+  "type": "module",
+  "name": "news_express",
+  "version": "1.0.0",
+  "main": "/src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app.js"
+>>>>>>> 0df22106f622485467b0c0d2b855535bbc44aca2
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
   "type": "commonjs",
   "description": "",
   "dependencies": {
@@ -32,5 +43,27 @@
     "path": "^0.12.7",
     "rate-limit-redis": "^4.2.0",
     "winston": "^3.17.0"
+=======
+  "dependencies": {
+    "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "handlebars": "^4.7.8",
+    "mongoose": "^8.9.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.5",
+    "nodemailer": "^6.9.16",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+>>>>>>> 0df22106f622485467b0c0d2b855535bbc44aca2
   }
 }

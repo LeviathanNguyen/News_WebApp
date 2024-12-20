@@ -1,0 +1,57 @@
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            {{!-- Logo --}}
+            <a class="navbar-brand" href="/" data-aos="fade-right">
+                <img src="/public/img/logo.png" alt="News Portal" height="40">
+            </a>
+
+            {{!-- Mobile Toggle Button --}}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarMain" aria-controls="navbarMain"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            {{!-- Navigation Items --}}
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto">
+                    {{#each categories}}
+                        <li class="nav-item" data-aos="fade-down" data-aos-delay="{{ multiply @index 100}}">
+                            <a class="nav-link {{if isActive}} active {{/if}}" href="/category/{{this.slug}}">{{this.name}}</a>
+                        </li>
+                    {{/each}}
+                </ul>
+
+                {{!-- Search Bar --}}
+                <form class="d-flex me-3" data-aos="fade-left">
+                    <input type="search" class="form-control me-2" placeholder="Search news...">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+
+                {{!-- User Menu --}}
+                {{#if user}}
+                    <div class="dropdown" data-aos="fade-left">
+                        <button class="btn btn-link dropdown-toggle" type="button"
+                                id="userMenu" data-bs-toggle="dropdown">
+                            {{user.username}}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                            {{#if user.isAdmin}}
+                                <li><a class="dropdown-item" href="/admin">Admin Panel</a></li>
+                            {{/if}}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                {{else}}
+                    <div data-aos="fade-left">
+                        <a href="/auth/login" class="btn btn-outline-primary me-2">Login</a>
+                        <a href="/auth/register" class="btn btn-primary">Register</a>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+    </nav>
+</header>
