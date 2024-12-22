@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const { AppError } = require('./errorHandler');
-const User = require('../models/User');
-const logger = require('../utils/logger');
-require('dotenv').config();
+import "dotenv/config";
+import jwt from "jsonwebtoken"
+import { AppError } from "./errorHandler.js";
+import User from "../models/User.js";
+import loggerService from "../utils/logger.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const TOKEN_EXPIRE = '24h';
@@ -128,7 +128,6 @@ const authMiddleware = {
                         username: user.username
                     };
                 }
-
                 next();
             });
         } catch (error) {
@@ -137,4 +136,4 @@ const authMiddleware = {
     }
 };
 
-module.exports = authMiddleware;
+export default authMiddleware;

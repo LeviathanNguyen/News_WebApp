@@ -1,0 +1,61 @@
+drwxr-xr-x    - levi 22 Dec 13:52 .
+.rw-r--r--  85k levi 22 Dec 16:01 ├── package-lock.json
+.rw-r--r-- 1.1k levi 22 Dec 16:01 ├── package.json
+.rw-r--r--    0 levi 22 Dec 20:29 ├── project_structure.txt
+drwxr-xr-x    - levi 21 Dec 12:24 └── src
+.rw-r--r-- 4.3k levi 22 Dec 15:48     ├── app.js
+drwxr-xr-x    - levi 21 Dec 01:48     ├── config
+.rw-r--r-- 1.3k levi 22 Dec 14:27     │   ├── config.js
+.rw-r--r-- 1.1k levi 22 Dec 14:30     │   └── database.js
+drwxr-xr-x    - levi 21 Dec 01:55     ├── controllers
+.rw-r--r--  547 levi 21 Dec 12:25     │   ├── adminController.js
+.rw-r--r-- 2.7k levi 21 Dec 12:26     │   ├── auth.js
+.rw-r--r-- 5.8k levi 21 Dec 12:23     │   ├── authController.js
+.rw-r--r--  949 levi 20 Dec 21:41     │   ├── NotificationController.js
+.rw-r--r-- 2.9k levi 20 Dec 21:41     │   ├── passwordController.js
+.rw-r--r-- 3.8k levi 20 Dec 21:41     │   └── userController.js
+drwxr-xr-x    - levi 22 Dec 14:14     ├── database
+.rw-r--r-- 7.0k levi 22 Dec 16:45     │   └── news_db.sql
+drwxr-xr-x    - levi 22 Dec 20:20     ├── logs
+.rw-r--r--    0 levi 22 Dec 20:20     │   ├── 22-12-2024-combined.log
+.rw-r--r--    0 levi 20 Dec 21:41     │   ├── combined.log
+.rw-r--r--    0 levi 20 Dec 21:41     │   ├── error.log
+.rw-r--r--  424 levi 22 Dec 20:20     │   ├── exceptions.log
+.rw-r--r--    0 levi 22 Dec 20:20     │   ├── http.log
+.rw-r--r--    0 levi 22 Dec 20:20     │   └── rejections.log
+drwxr-xr-x    - levi 20 Dec 21:41     ├── middlewares
+.rw-r--r-- 4.3k levi 22 Dec 16:46     │   ├── auth.js
+.rw-r--r-- 2.5k levi 22 Dec 16:46     │   ├── errorHandler.js
+.rw-r--r-- 1.7k levi 20 Dec 21:41     │   ├── rateLimiter.js
+.rw-r--r-- 7.5k levi 20 Dec 21:41     │   └── validate.js
+drwxr-xr-x    - levi 22 Dec 18:15     ├── models
+.rw-r--r-- 2.5k levi 22 Dec 20:17     │   ├── Article.js
+.rw-r--r-- 3.3k levi 22 Dec 20:17     │   ├── BaseModel.js
+.rw-r--r--  910 levi 22 Dec 20:24     │   ├── Category.js
+.rw-r--r-- 3.9k levi 22 Dec 17:20     │   ├── PasswordReset.js
+.rw-r--r-- 1.0k levi 22 Dec 20:16     │   ├── Tag.js
+.rw-r--r-- 1.4k levi 22 Dec 20:25     │   └── User.js
+drwxr-xr-x    - levi 22 Dec 13:22     ├── public
+drwxr-xr-x    - levi 20 Dec 21:41     │   ├── css
+drwxr-xr-x    - levi 20 Dec 19:22     │   ├── images
+drwxr-xr-x    - levi 20 Dec 19:22     │   └── js
+drwxr-xr-x    - levi 21 Dec 01:26     ├── routes
+.rw-r--r--  154 levi 19 Dec 14:10     │   ├── admin.routes.js
+.rw-r--r-- 1.8k levi 22 Dec 01:36     │   ├── article.routes.js
+.rw-r--r--  664 levi 22 Dec 01:32     │   ├── auth.routes.js
+.rw-r--r--  148 levi 19 Dec 14:10     │   ├── editor.routes.js
+.rw-r--r--  422 levi 21 Dec 01:37     │   ├── password.routes.js
+.rw-r--r--  376 levi 21 Dec 01:37     │   └── user.routes.js
+drwxr-xr-x    - levi 19 Dec 09:53     ├── services
+drwxr-xr-x    - levi 22 Dec 13:23     ├── utils
+.rw-r--r-- 1.5k levi 20 Dec 21:41     │   ├── emailService.js
+.rw-r--r-- 1.0k levi 20 Dec 21:41     │   ├── hash.js
+.rw-r--r-- 5.2k levi 22 Dec 20:23     │   └── logger.js
+drwxr-xr-x    - levi 20 Dec 21:41     └── views
+drwxr-xr-x    - levi 20 Dec 21:41         ├── auth
+drwxr-xr-x    - levi 20 Dec 21:41         ├── errors
+.rw-r--r-- 1.7k levi 20 Dec 21:41         ├── home.ejs
+drwxr-xr-x    - levi 20 Dec 21:41         ├── layouts
+drwxr-xr-x    - levi 19 Dec 09:54         ├── pages
+drwxr-xr-x    - levi 20 Dec 19:22         ├── partials
+drwxr-xr-x    - levi 20 Dec 21:41         └── user

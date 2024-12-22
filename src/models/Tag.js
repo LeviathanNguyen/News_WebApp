@@ -1,51 +1,36 @@
-import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../config/database";
+import pool from "../config/database.js";
+import BaseModel from "./BaseModel.js";
 
-class Tag extends Model {
-    // Check if this tag is associated with any articles
-    async hasArticles() {
-        return this.getArticles().then((articles) => articles.length > 0);
+class Tag extends BaseModel {
+    static tableName = "tags";
+    static modelName = "Tag";
+
+    static async validate(data) {
+        const errors = [];
+        
+        if (!data.name || data.name.length < 2 || data.name.length > 100) {
+            errors.push("Tên tag phải từ 2 đến 100 ký tự");
+        }
+        
+        if (errors.length > 0) {
+            throw new Error(errors.join(", "));
+        }
+    }
+
+    static async getArticles(tagId, limit = 10, offset = 0) {
+        try {
+            const [rows] = await pool.execute(
+                `SELECT a.* FROM articles a 
+                JOIN article_tags at ON a.id = at.article_id 
+                WHERE at.tag_id = ? AND a.status = 'published'
+                LIMIT ? OFFSET ?`,
+                [tagId, limit, offset]
+            );
+            return rows;
+        } catch (error) {
+            throw new Error(`Cannot fetch articles by tag: ${error.message}`);
+        }
     }
 }
 
-Tag.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    name: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-        unique: true,
-        validate: {
-            len: [3, 50], // Tag name must be between 3 and 50 characters
-        },
-    },
-    slug: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            is: /^[a-z0-9]+(?:-[a-z0-9]+)*$/, // SEO-friendly format
-        },
-    },
-}, {
-    sequelize,
-    modelName: "Tag",
-    tableName: "tags",
-    underscored: true,
-    hooks: {
-        // Generate slug from name before saving
-        beforeValidate: (tag) => {
-            if (!tag.slug) {
-                tag.slug = tag.name
-                    .toLowerCase()
-                    .replace(/[^a-z0-9\s]/g, "") // Remove special characters
-                    .replace(/\s+/g, "-"); // Replace spaces with hyphens
-            }
-        },
-    },
-});
-
-export { Tag };
+export default Tag;

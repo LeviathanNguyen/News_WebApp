@@ -1,13 +1,22 @@
-const logger = require('../utils/logger');
+import loggerService from "../utils/logger.js";
 
 class AppError extends Error {
-    constructor(statusCode, message) {
+    constructor(statusCode, message, errorCode=null) {
         super(message);
         this.statusCode = statusCode;
-        this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+        this.errorCode = errorCode || null;
+        this.status = `${statusCode}`.startsWith("4") ? "fail" : "error";
         this.isOperational = true;
 
         Error.captureStackTrace(this, this.constructor);
+    }
+
+    static badRequest(message="Bad request", errorCode="BAD_REQUEST") {
+        return new AppError(400, message, errorCode);
+    }
+
+    static unauthorized(message = "Unauthorized", errorCode="UNAUTHORIZED") {
+        return new AppError(401, message, errorCode);
     }
 }
 
@@ -56,13 +65,13 @@ const asyncHandler = (fn) => {
     };
 };
 
-// Middleware để bắt lỗi 404
+// Middleware for catch error: 404
 const notFound = (req, res, next) => {
     const err = new AppError(404, `Không tìm thấy đường dẫn: ${req.originalUrl}`);
     next(err);
 };
 
-// Middleware xử lý lỗi validation từ express-validator
+// Middleware handles validation errors from express-validator
 const handleValidationErrors = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -73,7 +82,7 @@ const handleValidationErrors = (req, res, next) => {
     next();
 };
 
-module.exports = {
+export default {
     AppError,
     errorHandler,
     asyncHandler,

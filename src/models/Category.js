@@ -1,55 +1,33 @@
-import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../config/database";
+import pool from "../config/database.js";
+import BaseModel from "./BaseModel.js";
 
-class Category extends Model {
-    // Get the total number of articles in this category
-    async countArticles() {
-        return this.getArticles().then((articles) => articles.length);
+class Category extends BaseModel {
+    static tableName = "categories";
+    static modelName = "Category";
+
+    static async validate(data) {
+        const errors = [];
+        
+        if (!data.name || data.name.length < 3 || data.name.length > 100) {
+            errors.push("Tên danh mục phải từ 3 đến 100 ký tự");
+        }
+        
+        if (errors.length > 0) {
+            throw new Error(errors.join(", "));
+        }
+    }
+
+    static async getArticleCount(categoryId) {
+        try {
+            const [rows] = await pool.execute(
+                `SELECT COUNT(*) as count FROM articles WHERE category_id = ?`,
+                [categoryId]
+            );
+            return rows[0].count;
+        } catch (error) {
+            throw new Error(`Cannot count articles in category: ${error.message}`);
+        }
     }
 }
 
-Category.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    name: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true,
-        validate: {
-            len: [3, 100], // Name must be between 3 and 100 characters
-        },
-    },
-    description: {
-        type: DataTypes.TEXT,
-        allowNull: true, // Optional description for the category
-    },
-    slug: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            is: /^[a-z0-9]+(?:-[a-z0-9]+)*$/, // SEO-friendly format
-        },
-    },
-}, {
-    sequelize,
-    modelName: "Category",
-    tableName: "categories",
-    underscored: true,
-    hooks: {
-        // Generate slug from name before saving
-        beforeValidate: (category) => {
-            if (!category.slug) {
-                category.slug = category.name
-                    .toLowerCase()
-                    .replace(/[^a-z0-9\s]/g, "") // Remove special characters
-                    .replace(/\s+/g, "-"); // Replace spaces with hyphens
-            }
-        },
-    },
-});
-
-export { Category };
+export default Category;

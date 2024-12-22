@@ -1,249 +1,126 @@
-<<<<<<< HEAD
-const pool = require('../config/database');
-const bcrypt = require('bcrypt');
-
-class User {
-    // Tìm user theo email
-    static async findByEmail(email) {
-        try {
-            const [rows] = await pool.execute(
-                'SELECT * FROM users WHERE email = ?',
-                [email]
-            );
-            return rows[0];
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-
-    // Tìm user theo username
-    static async findByUsername(username) {
-        try {
-            const [rows] = await pool.execute(
-                'SELECT * FROM users WHERE username = ?',
-                [username]
-            );
-            return rows[0];
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-
-    // Tìm user theo ID
-    static async findById(id) {
-        try {
-            const [rows] = await pool.execute(
-                'SELECT * FROM users WHERE id = ?',
-                [id]
-            );
-            return rows[0];
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-
-    // Tạo user mới
-    static async create(userData) {
-        const { username, email, password, fullname, nickname, dob } = userData;
-
-        try {
-            // Hash password
-            const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-            // Insert user mới
-            const [result] = await pool.execute(
-                `INSERT INTO users (username, email, password, fullname, nickname, dob) 
-                 VALUES (?, ?, ?, ?, ?, ?)`,
-                [username, email, hashedPassword, fullname, nickname, dob]
-            );
-
-            // Trả về user id
-            return result.insertId;
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-
-    // Cập nhật thông tin user
-    static async update(userId, userData) {
-        const { fullname, nickname, email, dob } = userData;
-        
-        try {
-            const [result] = await pool.execute(
-                `UPDATE users 
-                 SET fullname = COALESCE(?, fullname),
-                     nickname = ?,
-                     email = COALESCE(?, email),
-                     dob = ?,
-                     updated_at = CURRENT_TIMESTAMP
-                 WHERE id = ?`,
-                [fullname, nickname, email, dob, userId]
-            );
-            
-            return result.affectedRows > 0;
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-
-    // Cập nhật mật khẩu
-    static async updatePassword(userId, hashedPassword) {
-        try {
-            const [result] = await pool.execute(
-                `UPDATE users 
-                 SET password = ?,
-                     updated_at = CURRENT_TIMESTAMP
-                 WHERE id = ?`,
-                [hashedPassword, userId]
-            );
-            
-            return result.affectedRows > 0;
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-
-    // Verify password
-    static async verifyPassword(plainPassword, hashedPassword) {
-        try {
-            return await bcrypt.compare(plainPassword, hashedPassword);
-        } catch (error) {
-            throw new Error('Error verifying password');
-        }
-    }
-
-    // Xóa user
-    static async delete(userId) {
-        try {
-            const [result] = await pool.execute(
-                'DELETE FROM users WHERE id = ?',
-                [userId]
-            );
-            return result.affectedRows > 0;
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-
-    // Tìm kiếm users theo điều kiện
-    static async search(conditions = {}, limit = 10, offset = 0) {
-        try {
-            let query = 'SELECT * FROM users WHERE 1=1';
-            const params = [];
-
-            if (conditions.username) {
-                query += ' AND username LIKE ?';
-                params.push(`%${conditions.username}%`);
-            }
-
-            if (conditions.email) {
-                query += ' AND email LIKE ?';
-                params.push(`%${conditions.email}%`);
-            }
-
-            query += ' LIMIT ? OFFSET ?';
-            params.push(limit, offset);
-
-            const [rows] = await pool.execute(query, params);
-            return rows;
-        } catch (error) {
-            throw new Error('Database error: ' + error.message);
-        }
-    }
-}
-
-module.exports = User;
-=======
-import { Model, DataTypes } from "sequelize";
 import bcrypt from "bcrypt";
-import { sequelize } from "../config/database"
+import BaseModel from "./BaseModel.js";
 
-class User extends Model {
-    // Validate user's password
-    async validatePassword(password) {
-        return bcrypt.compare(password, this.password);
+class User extends BaseModel {
+    static tableName = "users";
+    static modelName = "User";
+
+    static async validate(data) {
+        const errors = [];
+        
+        if (data.username) {
+            if (data.username.length < 3 || data.username.length > 50) {
+                errors.push("Username phải từ 3 đến 50 ký tự");
+            }
+            const existingUser = await this.findOneBy("username", data.username);
+            if (existingUser && existingUser.id !== data.id) {
+                errors.push("Username đã tồn tại");
+            }
+        }
+        if (data.email) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+                errors.push("Email không hợp lệ");
+            }
+            const existingEmail = await this.findOneBy('email', data.email);
+            if (existingEmail && existingEmail.id !== data.id) {
+                errors.push("Email đã tồn tại");
+            }
+        }
+        if (data.password) {
+            if (data.password.length < 6) {
+                errors.push("Mật khẩu phải có ít nhất 6 ký tự");
+            }
+        }
+        if (data.role && !['guest', 'subscriber', 'writer', 'editor', 'admin'].includes(data.role)) {
+            errors.push("Vai trò không hợp lệ");
+        }
+        
+        if (errors.length > 0) {
+            throw new Error(errors.join(", "));
+        }
     }
 
-    // Check if user's subscription is still active
-    isSubscriptionActive() {
-        if (!this.subscription_expires_at) return false;
-        return new Date(this.subscription_expires_at) > new Date();
+    static async create(data) {
+        if (data.password) {
+            data.password = await this.hashPassword(data.password);
+        }
+        return super.create(data);
+    }
+
+    static async update(id, data)  {
+        if (data.password) {
+            data.password = await this.hashPassword(data.password);
+        }
+        return super.update(id, data);
+    }
+
+    static async hashPassword(password) {
+        const salt = await bcrypt.genSalt(10);
+        return bcrypt.hash(password, salt);
+    }
+
+    static async verifyPassword(plainPassword, hashedPassword) {
+        return bcrypt.compare(plainPassword, hashedPassword);
+    }
+
+    static async changePassword(userId, oldPassword, newPassword) {
+        try {
+            const user = await this.findById(userId);
+            if (!user) {
+                throw new Error("Người dùng không tồn tại");
+            }
+
+            const isValid = await this.verifyPassword(oldPassword, user.password);
+            if (!isValid) {
+                throw new Error("Mật khẩu cũ không chính xác");
+            }
+
+            const hashedPassword = await this.hashPassword(newPassword);
+            return this.update(userId, { password: hashedPassword });
+        } catch (error) {
+            throw new Error(`Không thể đổi mật khẩu: ${error.message}`);
+        }
+    }
+
+    static async hasRole(userId, roles) {
+        const user = await this.findById(userId);
+        return user && roles.includes(user.role);
+    }
+
+    static async hasValidSubscription(userId) {
+        const user = await this.findById(userId);
+        return user && user.subscription_expires_at > new Date();
+    }
+
+    static async setResetToken(email) {
+        try {
+            const resetToken = crypto.randomBytes(32).toString("hex");
+            const resetTokenExpires = new Date(Date.now() + 3600000); // 1 hours
+
+            await this.update(email, {
+                reset_token: resetToken,
+                reset_token_expires: resetTokenExpires
+            });
+
+            return resetToken;
+        } catch (error) {
+            throw new Error(`Không thể tạo token reset: ${error.message}`);
+        }
+    }
+
+    static async findByResetToken(token) {
+        try {
+            const [user] = await pool.execute(
+                `SELECT * FROM ${this.tableName} 
+                WHERE reset_token = ? 
+                AND reset_token_expires > NOW()`,
+                [token]
+            );
+            return user[0] || null;
+        } catch (error) {
+            throw new Error(`Không thể tìm token reset: ${error.message}`);
+        }
     }
 }
 
-User.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    username: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-        unique: true,
-        validate: {
-            len: [3, 50] // Username must be between 3 and 50 characters
-        }
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            isEmail: true // Ensures valid email format
-        }
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    full_name: {
-        type: DataTypes.STRING(100),
-        allowNull: true
-    },
-    pen_name: {
-        type: DataTypes.STRING(100),
-        allowNull: true
-    },
-    role: {
-        type: DataTypes.ENUM("guest", "subscriber", "writer", "editor", "admin"),
-        defaultValue: "guest"
-    },
-    date_of_birth: {
-        type: DataTypes.DATEONLY,
-        allowNull: true
-    },
-    subscription_expires_at: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
-    reset_token: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    reset_token_expires: {
-        type: DataTypes.DATE,
-        allowNull: true
-    }
-}, {
-    sequelize,
-    modelName: "User",
-    tableName: "users",
-    underscored: true,
-    hooks: {
-        // Hash password before creating new user
-        beforeCreate: async (user) => {
-            if (user.password) {
-                user.password = await bcrypt.hash(user.password, 10)
-            }
-        },
-        // Hash password when updating if password field is modified
-        beforeUpdate: async (user) => {
-            if (user.changed("password")) {
-                user.password = await bcrypt.hash(user.password, 10);
-            }
-        }
-    }
-});
->>>>>>> 0df22106f622485467b0c0d2b855535bbc44aca2
+export default User;

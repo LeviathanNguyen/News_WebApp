@@ -1,111 +1,77 @@
-import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../config/database";
+import pool from "../config/database.js";
+import BaseModel from "./BaseModel.js";
 
-class Article extends Model {
-    // Check if article is premium content
-    isPremium() {
-        return this.is_premium;
+class Article extends BaseModel {
+    static tableName = "articles";
+    static modelName = "Article";
+
+    static async validate(data) {
+        const errors = [];
+        
+        if (!data.title || data.title.length < 5 || data.title.length > 255) {
+            errors.push("Tiêu đề phải từ 5 đến 255 ký tự");
+        }
+        if (!data.abstract) {
+            errors.push("Tóm tắt không được để trống");
+        }
+        if (!data.content) {
+            errors.push("Nội dung không được để trống");
+        }
+        if (!data.author_id) {
+            errors.push("ID tác giả không được để trống");
+        }
+        if (!data.category_id) {
+            errors.push("ID danh mục không được để trống");
+        }
+        if (data.status && !["draft", "pending", "published", "rejected"].includes(data.status)) {
+            errors.push("Trạng thái không hợp lệ");
+        }
+        
+        if (errors.length > 0) {
+            throw new Error(errors.join(", "));
+        }
     }
 
-    // Check if article is published and within publish date
-    isPublished() {
-        return this.status === "published" && this.publish_date <= new Date();
+    static async findBySlug(slug) {
+        return this.findOneBy("slug", slug);
+    }
+
+    static async findByStatus(status, limit = 10, offset = 0) {
+        try {
+            const [rows] = await pool.execute(
+                `SELECT * FROM ${this.tableName} WHERE status = ? LIMIT ? OFFSET ?`,
+                [status, limit, offset]
+            );
+            return rows;
+        } catch (error) {
+            throw new Error(`Cannot find articles by status: ${error.message}`);
+        }
+    }
+
+    static async incrementViewCount(id) {
+        try {
+            await pool.execute(
+                `UPDATE ${this.tableName} SET view_count = view_count + 1 WHERE id = ?`,
+                [id]
+            );
+        } catch (error) {
+            throw new Error(`Cannot increment view count: ${error.message}`);
+        }
+    }
+
+    static async getPremiumArticles(limit = 10, offset = 0) {
+        try {
+            const [rows] = await pool.execute(
+                `SELECT * FROM ${this.tableName} 
+                WHERE is_premium = TRUE AND status = 'published'
+                ORDER BY publish_date DESC LIMIT ? OFFSET ?`,
+                [limit, offset]
+            );
+            return rows;
+        } catch (error) {
+            throw new Error(`Cannot fetch premium articles: ${error.message}`);
+        }
     }
 }
 
-Article.init({
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: [5, 255], // Title must be between 5 and 255 characters
-        },
-    },
-    slug: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true, // Ensure unique URLs for SEO
-    },
-    abstract: {
-        type: DataTypes.TEXT,
-        allowNull: false, // Required for article preview
-    },
-    content: {
-        type: DataTypes.TEXT("long"),
-        allowNull: false, // Main article content
-    },
-    thumbnail: {
-        type: DataTypes.STRING,
-        allowNull: true, // Optional featured image URL
-    },
-    status: {
-        type: DataTypes.ENUM("draft", "pending", "published", "rejected"),
-        defaultValue: "draft",
-    },
-    rejection_reason: {
-        type: DataTypes.TEXT,
-        allowNull: true, // Required when status is "rejected"
-    },
-    is_premium: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false, // Premium content flag
-    },
-    publish_date: {
-        type: DataTypes.DATE,
-        allowNull: true, // Schedule publish date
-    },
-    view_count: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0, // Track article views
-    },
-    author_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "users",
-            key: "id",
-        },
-    },
-    category_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: "categories",
-            key: "id",
-        },
-    },
-}, {
-    sequelize,
-    modelName: "Article",
-    tableName: "articles",
-    underscored: true,
-    hooks: {
-        // Generate SEO-friendly slug from title if not provided
-        beforeValidate: (article, options) => {
-            if (!article.slug) {
-                article.slug = article.title
-                    .toLowerCase()
-                    .replace(/[^a-z0-9\s]/g, "") // Remove special characters
-                    .replace(/\s+/g, "-"); // Replace spaces with hyphens
-            }
-        },
-    },
-});
-
-// Define relationships between models
-User.hasMany(Article, {
-    foreignKey: "author_id",
-    as: "author"
-});
-
-Article.belongsTo(User, {
-    foreignKey: "author_id",
-    as: "author"
-});
-
-export { User, Article };
+export default Article;

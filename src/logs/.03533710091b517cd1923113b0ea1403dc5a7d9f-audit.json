@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/levi/Workspaces/Web/News_WebApp/src/logs/.03533710091b517cd1923113b0ea1403dc5a7d9f-audit.json",
+    "files": [
+        {
+            "date": 1734873651328,
+            "name": "/home/levi/Workspaces/Web/News_WebApp/src/logs/22-12-2024-combined.log",
+            "hash": "d8e7999bcaba4cec57c28ebdad0690bfc6196160c8044893cb5e942b6ab4afec"
+        }
+    ],
+    "hashType": "sha256"
+}
