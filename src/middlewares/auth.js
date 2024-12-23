@@ -1,6 +1,6 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken"
-import { AppError } from "./errorHandler.js";
+import AppError from "./errorHandler.js";
 import User from "../models/User.js";
 import loggerService from "../utils/logger.js";
 

@@ -9,6 +9,11 @@
             "date": 1734873651328,
             "name": "/home/levi/Workspaces/Web/News_WebApp/src/logs/22-12-2024-combined.log",
             "hash": "d8e7999bcaba4cec57c28ebdad0690bfc6196160c8044893cb5e942b6ab4afec"
+        },
+        {
+            "date": 1734928989672,
+            "name": "/home/levi/Workspaces/Web/News_WebApp/src/logs/23-12-2024-combined.log",
+            "hash": "0cc56c88e4ee8f858f8697d49d1bc4fbf7652467fd7d8b5b8bc9c983edc80e0e"
         }
     ],
     "hashType": "sha256"

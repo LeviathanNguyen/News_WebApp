@@ -37,6 +37,18 @@ const logFormat = winston.format.combine(
     winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
 );
 
+
+// Custom format for console output
+const consoleFormat = winston.format.combine(
+    winston.format.colorize({ all: true }),
+    winston.format.timestamp({ format: "DD-MM-YYYY HH:mm:ss" }),
+    winston.format.printf(
+        info => `${info.timestamp} ${info.level}: ${info.message}${
+            info.metadata && Object.keys(info.metadata).length ? "\n" + JSON.stringify(info.metadata, null, 2) : ""
+        }`
+    )
+);
+
 // Daily Rotate File Transport for log rotation
 const dailyRotateTransport = new DailyRotateFile({
     filename: path.join(__dirname, "../logs/%DATE%-combined.log"),
@@ -189,4 +201,4 @@ loggerService.stream = {
     write: (message) => logger.http(message.trim())
 };
 
-export default loggerService;
+export default { logger, loggerService };

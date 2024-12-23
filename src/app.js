@@ -15,19 +15,31 @@ import adminRoutes from "./routes/admin.routes.js"
 import editorRoutes from "./routes/editor.routes.js"
 
 import authMiddleware from "./middlewares/auth.js";
-import { errorHandler, notFound } from "./middlewares/errorHandler.js";
+import errorHandler from "./middlewares/errorHandler.js";
+import notFound from "./middlewares/errorHandler.js"
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+const MySQLStoreSession = MySQLStore(session);
+import pool from "./config/database.js";
+
 // Session store configuration
-import dbConnection from "./config/database.js";
-const sessionStore = new MySQLStore({
+const sessionStore = new MySQLStoreSession({
     clearExpired: true,
     checkExpirationInterval: 900000, // in milliseconds (15min)
     expiration: 86400000, // (24hours)
-    createDatabaseTable: true
-}, dbConnection);
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'sessions',
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data',
+            user_id: 'user_id'
+        }
+    }
+}, pool.promise());
 
 // Middleware
 app.use(cors({

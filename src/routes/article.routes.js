@@ -1,7 +1,8 @@
 import e from "express";
-import { Article, User } from "../models/Article.js"
+import Article from "../models/Article.js"
 import Category from "../models/Category.js"
 import Tag from "../models/Tag.js"
+import User from "../models/User.js";
 
 const router = e.Router();
 
