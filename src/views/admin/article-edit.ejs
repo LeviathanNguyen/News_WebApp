@@ -1,0 +1,105 @@
+<%- contentFor('body') %>
+<h1>Chỉnh sửa Bài báo</h1>
+
+<form
+  action="/admin/article-edit/<%= article.id %>"
+  method="POST"
+  class="mb-4"
+  enctype="multipart/form-data"
+>
+  <div class="form-group">
+    <label for="title">Tiêu đề</label>
+    <input
+      type="text"
+      name="title"
+      id="title"
+      class="form-control"
+      value="<%= article.title %>"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="abstract">Tóm tắt</label>
+    <textarea
+      name="abstract"
+      id="abstract"
+      class="form-control"
+      rows="3"
+      required
+    ><%= article.abstract %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="content">Nội dung</label>
+    <textarea
+      name="content"
+      id="content"
+      class="form-control"
+      rows="5"
+      required
+    ><%= article.content %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="thumbnail">Thumbnail</label>
+    <input
+      type="text"
+      name="thumbnail"
+      id="thumbnail"
+      class="form-control"
+      value="<%= article.thumbnail %>"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="category_id">Danh mục</label>
+    <select name="category_id" id="category_id" class="form-control" required>
+      <% categories.forEach(category => { %>
+      <option
+        value="<%= category.id %>"
+        <%= article.category_id === category.id ? "selected" : "" %>
+      >
+        <%= category.name %>
+      </option>
+      <% }); %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="status">Trạng thái</label>
+    <select name="status" id="status" class="form-control" required>
+      <option value="draft" <%= article.status === "draft" ? "selected" : "" %>>
+        Draft
+      </option>
+      <option
+        value="pending"
+        <%= article.status === "pending" ? "selected" : "" %>
+      >
+        Pending
+      </option>
+      <option
+        value="published"
+        <%= article.status === "published" ? "selected" : "" %>
+      >
+        Published
+      </option>
+      <option
+        value="rejected"
+        <%= article.status === "rejected" ? "selected" : "" %>
+      >
+        Rejected
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="is_premium">Premium</label>
+    <select name="is_premium" id="is_premium" class="form-control">
+      <option value="false" <%= !article.is_premium ? "selected" : "" %>>No</option>
+      <option value="true" <%= article.is_premium ? "selected" : "" %>>Yes</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-2">Lưu thay đổi</button>
+</form>

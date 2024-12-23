@@ -1,0 +1,29 @@
+<%- contentFor('body') %>
+<h1>Quản lý Tags</h1>
+
+<!-- Form thêm tag -->
+<form action="/admin/tags" method="POST" class="mb-4">
+  <div class="form-group">
+    <label for="name">Tên Tag</label>
+    <input type="text" name="name" id="name" class="form-control" required />
+  </div>
+  <button type="submit" class="btn btn-primary mt-2">Thêm Tag</button>
+</form>
+
+<!-- Danh sách Tags -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Tên Tag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tags.forEach((tag, index) => { %>
+    <tr>
+      <td><%= index + 1 %></td>
+      <td><%= tag.name %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>

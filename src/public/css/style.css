@@ -1,142 +1,148 @@
 /* General styles */
 body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
 }
 
 .container {
-    flex: 1;
+  flex: 1;
 }
 
 /* Navbar styles */
 .navbar {
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
-    font-weight: bold;
-    font-size: 1.5rem;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 /* Card styles */
 .card {
-    border: none;
-    border-radius: 10px;
-    transition: transform 0.2s;
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 /* Form styles */
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label {
-    color: #0d6efd;
+  color: #0d6efd;
 }
 
 .form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 /* Button styles */
 .btn {
-    padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
 }
 
 .btn-primary {
-    background: linear-gradient(45deg, #0d6efd, #0a58ca);
-    border: none;
+  background: linear-gradient(45deg, #0d6efd, #0a58ca);
+  border: none;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(45deg, #0a58ca, #084298);
-    transform: translateY(-2px);
+  background: linear-gradient(45deg, #0a58ca, #084298);
+  transform: translateY(-2px);
 }
 
 /* Animation keyframes */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Animation classes */
 .fade-in {
-    animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.5s ease-out;
 }
 
 /* Custom form elements */
 .form-floating > .form-control {
-    padding: 1rem 0.75rem;
+  padding: 1rem 0.75rem;
 }
 
 .form-floating > label {
-    padding: 1rem 0.75rem;
+  padding: 1rem 0.75rem;
 }
 
 /* Footer styles */
 .footer {
-    padding: 1rem 0;
-    margin-top: 2rem;
-    background-color: #f8f9fa;
-    border-top: 1px solid #dee2e6;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .card {
-        margin: 0 1rem;
-    }
-    
-    .btn {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
+  .card {
+    margin: 0 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
 }
 
 /* Toast notification styles */
 .toastify {
-    border-radius: 8px !important;
-    font-family: inherit !important;
+  border-radius: 8px !important;
+  font-family: inherit !important;
 }
 
 /* Loading spinner */
 .spinner-border {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
 }
 
 /* Input group with icons */
 .input-group-text {
-    background-color: transparent;
-    border-right: none;
+  background-color: transparent;
+  border-right: none;
 }
 
 .input-group .form-control {
-    border-left: none;
+  border-left: none;
 }
 
 /* Custom checkbox style */
 .form-check-input:checked {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
 
 /* Link hover effects */
 a {
-    transition: color 0.2s;
+  transition: color 0.2s;
 }
 
 a:hover {
-    color: #0a58ca;
+  color: #0a58ca;
 }
 /*
 General Styles
@@ -229,3 +235,33 @@ Premium Content Badge
     100% { background-position: -200% 0; }
 }
 */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
