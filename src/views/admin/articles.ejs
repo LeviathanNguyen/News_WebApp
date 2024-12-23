@@ -1,0 +1,150 @@
+<%- contentFor('body') %>
+<h1>Quản lý Articles</h1>
+
+
+<!-- Form thêm Article -->
+<form
+  action="/admin/articles"
+  method="POST"
+  class="mb-4"
+  enctype="multipart/form-data"
+>
+  <div class="form-group">
+    <label for="title">Tiêu đề</label>
+    <input type="text" name="title" id="title" class="form-control" required />
+  </div>
+
+  <div class="form-group">
+    <label for="abstract">Tóm tắt</label>
+    <textarea
+      name="abstract"
+      id="abstract"
+      class="form-control"
+      rows="3"
+      placeholder="Nhập tóm tắt"
+      required
+    ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="content">Nội dung</label>
+    <textarea
+      name="content"
+      id="content"
+      class="form-control"
+      rows="5"
+      placeholder="Nhập nội dung"
+      required
+    ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="thumbnail">Thumbnail</label>
+    <input type="file" name="thumbnail" id="thumbnail" class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <label for="category_id">Danh mục</label>
+    <select name="category_id" id="category_id" class="form-control" required>
+      <% categories.forEach(category => { %>
+      <option value="<%= category.id %>"><%= category.name %></option>
+      <% }); %>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="author_id">ID Tác giả</label>
+    <input type="number" name="author_id" id="author_id" class="form-control" required />
+  </div>
+
+  <div class="form-group">
+    <label for="status">Trạng thái</label>
+    <select name="status" id="status" class="form-control" required>
+      <option value="draft">Draft</option>
+      <option value="pending">Pending</option>
+      <option value="published">Published</option>
+      <option value="rejected">Rejected</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="is_premium">Premium</label>
+    <select name="is_premium" id="is_premium" class="form-control">
+      <option value="false">No</option>
+      <option value="true">Yes</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-2">Thêm Article</button>
+</form>
+
+
+<!-- Danh sách Articles -->
+<!-- Danh sách Articles -->
+<table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tiêu đề</th>
+        <th>Danh mục</th>
+        <th>Trạng thái</th>
+        <th>Ngày đăng</th>
+        <th>Views</th>
+        <th>Tác giả</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% articles.forEach((article, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= article.title %></td>
+        <td><%= article.category_name %></td>
+        <td>
+          <form
+            action="/admin/articles/<%= article.id %>/status"
+            method="POST"
+            class="d-inline"
+          >
+            <select
+              name="status"
+              class="form-control"
+              onchange="this.form.submit()"
+            >
+              <option value="draft" <%= article.status === "draft" ? "selected" : "" %>>
+                Draft
+              </option>
+              <option
+                value="pending"
+                <%= article.status === "pending" ? "selected" : "" %>
+              >
+                Pending
+              </option>
+              <option
+                value="published"
+                <%= article.status === "published" ? "selected" : "" %>
+              >
+                Published
+              </option>
+              <option
+                value="rejected"
+                <%= article.status === "rejected" ? "selected" : "" %>
+              >
+                Rejected
+              </option>
+            </select>
+          </form>
+        </td>
+        <td>
+          <%= article.publish_date ? article.publish_date.toLocaleString() : 'N/A' %>
+        </td>
+        <td><%= article.view_count %></td>
+        <td><%= article.author_name %></td>
+        <td>
+          <a href="/admin/article-edit/<%= article.id %>" class="btn btn-sm btn-warning">Sửa</a>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  
