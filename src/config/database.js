@@ -1,6 +1,6 @@
 import "dotenv/config"
 import mysql from "mysql2/promise"
-import logger from "../utils/logger.js"
+import { logger, loggerService } from "../utils/logger.js"
 
 class Database {
     constructor(config) {
@@ -26,7 +26,7 @@ class Database {
             }
             return this.pool;
         } catch (error) {
-            logger.error("Error creating database pool:", error);
+            loggerService.logError("Error creating database pool:", error);
             throw new Error("Failed to create database pool");
         }
     }

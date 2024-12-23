@@ -72,3 +72,53 @@ TypeError [ERR_INVALID_ARG_TYPE]: The "superCtor" argument must be of type funct
     at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
     at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+23-12-2024 12:39:50 error: uncaughtException: logger.error is not a function
+TypeError: logger.error is not a function
+    at Database.createPool (file:///home/levi/Workspaces/Web/News_WebApp/src/config/database.js:29:20)
+    at file:///home/levi/Workspaces/Web/News_WebApp/src/config/database.js:77:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+23-12-2024 12:40:48 error: uncaughtException: loggerService is not defined
+ReferenceError: loggerService is not defined
+    at Database.createPool (file:///home/levi/Workspaces/Web/News_WebApp/src/config/database.js:29:13)
+    at file:///home/levi/Workspaces/Web/News_WebApp/src/config/database.js:77:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+23-12-2024 12:48:02 error: uncaughtException: pool.promise is not a function
+TypeError: pool.promise is not a function
+    at file:///home/levi/Workspaces/Web/News_WebApp/src/app.js:42:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+23-12-2024 12:50:13 error: uncaughtException: Unknown column specified ("user_id"). Only the following columns are configurable: "session_id", "expires", "data". Please review the documentation to understand how to correctly use this option.
+Error: Unknown column specified ("user_id"). Only the following columns are configurable: "session_id", "expires", "data". Please review the documentation to understand how to correctly use this option.
+    at /home/levi/Workspaces/Web/News_WebApp/node_modules/express-mysql-session/index.js:128:11
+    at Array.forEach (<anonymous>)
+    at MySQLStore.validateOptions (/home/levi/Workspaces/Web/News_WebApp/node_modules/express-mysql-session/index.js:126:43)
+    at MySQLStore.setOptions (/home/levi/Workspaces/Web/News_WebApp/node_modules/express-mysql-session/index.js:121:8)
+    at new MySQLStore (/home/levi/Workspaces/Web/News_WebApp/node_modules/express-mysql-session/index.js:21:8)
+    at file:///home/levi/Workspaces/Web/News_WebApp/src/app.js:28:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+23-12-2024 12:52:36 error: uncaughtException: app.use() requires a middleware function
+TypeError: app.use() requires a middleware function
+    at Function.use (/home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js:217:11)
+    at file:///home/levi/Workspaces/Web/News_WebApp/src/app.js:117:5
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+23-12-2024 12:54:15 error: uncaughtException: ensureGuest is not defined
+ReferenceError: ensureGuest is not defined
+    at file:///home/levi/Workspaces/Web/News_WebApp/src/app.js:119:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)
+23-12-2024 12:56:39 error: uncaughtException: ensureGuest is not defined
+ReferenceError: ensureGuest is not defined
+    at file:///home/levi/Workspaces/Web/News_WebApp/src/app.js:119:27
+    at ModuleJob.run (node:internal/modules/esm/module_job:234:25)
+    at async ModuleLoader.import (node:internal/modules/esm/loader:473:24)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:122:5)

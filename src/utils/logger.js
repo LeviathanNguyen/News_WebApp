@@ -201,4 +201,4 @@ loggerService.stream = {
     write: (message) => logger.http(message.trim())
 };
 
-export default { logger, loggerService };
+export { logger, loggerService };

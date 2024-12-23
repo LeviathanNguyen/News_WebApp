@@ -15,8 +15,7 @@ import adminRoutes from "./routes/admin.routes.js"
 import editorRoutes from "./routes/editor.routes.js"
 
 import authMiddleware from "./middlewares/auth.js";
-import errorHandler from "./middlewares/errorHandler.js";
-import notFound from "./middlewares/errorHandler.js"
+import { errorHandler, notFound } from "./middlewares/errorHandler.js";
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -36,10 +35,9 @@ const sessionStore = new MySQLStoreSession({
             session_id: 'session_id',
             expires: 'expires',
             data: 'data',
-            user_id: 'user_id'
         }
     }
-}, pool.promise());
+}, pool);
 
 // Middleware
 app.use(cors({
@@ -118,14 +116,14 @@ app.use((err, req, res, next) => {
 app.use(notFound);
 app.use(errorHandler);
 
-app.get("/auth/register", ensureGuest, (req, res) => {
+app.get("/auth/register", authMiddleware.ensureGuest, (req, res) => {
     res.render("auth/register", {
         title: "Đăng Ký",
         layout: "./views/layouts/main.ejs"
     });
 });
 
-app.get("/auth/forgot-password", ensureGuest, (req, res) => {
+app.get("/auth/forgot-password", authMiddleware.ensureGuest, (req, res) => {
     res.render("auth/forgot-password", {
         title: "Quên Mật Khẩu",
         layout: "./views/layouts/main.ejs"
@@ -133,7 +131,7 @@ app.get("/auth/forgot-password", ensureGuest, (req, res) => {
 });
 
 // User route
-app.get("/user/profile", ensureAuthenticated, (req, res) => {
+app.get("/user/profile", authMiddleware.ensureAuthenticated, (req, res) => {
     res.render("user/profile", {
         title: "Thông Tin Cá Nhân",
         layout: "./views/layouts/main.ejs"

@@ -1,0 +1,22 @@
+23-12-2024 12:48:02 info: Database pool created successfully
+23-12-2024 12:48:02 info: ✅ Database connected successfully
+23-12-2024 12:50:13 info: Database pool created successfully
+23-12-2024 12:50:13 info: ✅ Database connected successfully
+23-12-2024 12:52:36 info: Database pool created successfully
+23-12-2024 12:52:36 info: ✅ Database connected successfully
+23-12-2024 12:54:15 info: Database pool created successfully
+23-12-2024 12:54:15 info: ✅ Database connected successfully
+23-12-2024 12:56:39 info: Database pool created successfully
+23-12-2024 12:56:39 info: ✅ Database connected successfully
+23-12-2024 12:57:33 info: Database pool created successfully
+23-12-2024 12:57:33 info: ✅ Database connected successfully
+23-12-2024 12:57:39 error: Application Error Cannot find module 'ejs'
+Require stack:
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/view.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/express.js
+23-12-2024 12:57:56 error: Application Error Cannot find module 'ejs'
+Require stack:
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/view.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/express.js

@@ -1,0 +1,10 @@
+23-12-2024 12:57:39 error: Application Error Cannot find module 'ejs'
+Require stack:
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/view.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/express.js
+23-12-2024 12:57:56 error: Application Error Cannot find module 'ejs'
+Require stack:
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/view.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/express.js

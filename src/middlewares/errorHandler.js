@@ -1,4 +1,4 @@
-import loggerService from "../utils/logger.js";
+import { loggerService } from "../utils/logger.js";
 
 class AppError extends Error {
     constructor(statusCode, message, errorCode=null) {
@@ -25,7 +25,7 @@ const errorHandler = (err, req, res, next) => {
     err.status = err.status || 'error';
 
     // Log error
-    logger.logError(err, {
+    loggerService.logError(err, {
         url: req.originalUrl,
         method: req.method,
         body: req.body,
@@ -82,7 +82,7 @@ const handleValidationErrors = (req, res, next) => {
     next();
 };
 
-export default {
+export {
     AppError,
     errorHandler,
     asyncHandler,

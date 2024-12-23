@@ -1,8 +1,8 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken"
-import AppError from "./errorHandler.js";
+import { AppError } from "./errorHandler.js";
 import User from "../models/User.js";
-import loggerService from "../utils/logger.js";
+import { loggerService } from "../utils/logger.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const TOKEN_EXPIRE = '24h';
@@ -45,13 +45,13 @@ const authMiddleware = {
                 };
 
                 // Log successful authentication
-                logger.logAuth(decoded.userId, 'token_verify', true, req.ip);
+                loggerService.logAuth(decoded.userId, 'token_verify', true, req.ip);
 
                 next();
             });
         } catch (error) {
             // Log failed authentication
-            logger.logAuth('unknown', 'token_verify', false, req.ip);
+            loggerService.logAuth('unknown', 'token_verify', false, req.ip);
             next(error);
         }
     },
@@ -133,6 +133,22 @@ const authMiddleware = {
         } catch (error) {
             next();
         }
+    },
+
+    ensureGuest(req, res, next) {
+        if (req.session.user) {
+            req.flash('error_msg', 'Bạn đã đăng nhập rồi');
+            return res.redirect('/');
+        }
+        next();
+    },
+
+    ensureAuthenticated(req, res, next) {
+        if (!req.session.user) {
+            req.flash('error_msg', 'Vui lòng đăng nhập để tiếp tục');
+            return res.redirect('/auth/login');
+        }
+        next();
     }
 };
 
