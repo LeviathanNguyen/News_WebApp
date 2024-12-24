@@ -44,7 +44,7 @@ CREATE TABLE sessions (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+ALTER TABLE sessions CHANGE COLUMN `expires` `expires` BIGINT(20) NOT NULL ;
 -- Create categories table
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY, -- Primary key
