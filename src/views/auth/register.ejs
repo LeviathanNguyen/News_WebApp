@@ -1,123 +1,154 @@
 <%- contentFor('body') %>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h2 class="text-center mb-4">Đăng ký tài khoản</h2>
-                    
-                    <form id="registerForm">
-                        <!-- Username -->
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Tên đăng nhập</label>
-                            <input type="text" class="form-control" id="username" name="username" required 
-                                   minlength="3" maxlength="50" pattern="^[a-zA-Z0-9]+$" 
-                                   title="Tên đăng nhập chỉ chứa chữ cái và số.">
-                            <div class="form-text">Tối thiểu 3 ký tự, chỉ bao gồm chữ cái và số</div>
-                        </div>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Đăng ký tài khoản</h2>
 
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
+                <form id="registerForm" method="post" action="/api/auth/register">
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="username" name="username" required 
+                               minlength="3" maxlength="50" pattern="^[a-zA-Z0-9]+$" 
+                               title="Tên đăng nhập chỉ chứa chữ cái và số.">
+                        <div class="form-text">Tối thiểu 3 ký tự, chỉ bao gồm chữ cái và số</div>
+                    </div>
 
-                        <!-- Password -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Mật khẩu</label>
-                            <input type="password" class="form-control" id="password" name="password" required 
-                                   minlength="8" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$"
-                                   title="Mật khẩu cần tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.">
-                            <div class="form-text">
-                                Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt
-                            </div>
-                        </div>
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
 
-                        <!-- Confirm Password -->
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
-                            <input type="password" class="form-control" id="confirmPassword" 
-                                   name="confirmPassword" required>
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mật khẩu</label>
+                        <input type="password" class="form-control" id="password" name="password" required 
+                               minlength="8" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$"
+                               title="Mật khẩu cần tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.">
+                        <div class="form-text">
+                            Tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt
                         </div>
+                    </div>
 
-                        <!-- Full Name -->
-                        <div class="mb-3">
-                            <label for="fullname" class="form-label">Họ và tên</label>
-                            <input type="text" class="form-control" id="fullname" name="fullname" required>
-                        </div>
+                    <!-- Confirm Password -->
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                        <input type="password" class="form-control" id="confirmPassword" 
+                               name="confirmPassword" required>
+                    </div>
 
-                        <!-- Optional fields -->
-                        <div class="mb-3">
-                            <label for="nickname" class="form-label">Bút danh (không bắt buộc)</label>
-                            <input type="text" class="form-control" id="nickname" name="nickname">
-                        </div>
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Họ và tên</label>
+                        <input type="text" class="form-control" id="fullname" name="fullname" required>
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="dob" class="form-label">Ngày sinh (không bắt buộc)</label>
-                            <input type="date" class="form-control" id="dob" name="dob">
-                        </div>
+                    <!-- Optional fields -->
+                    <div class="mb-3">
+                        <label for="nickname" class="form-label">Bút danh (không bắt buộc)</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname">
+                    </div>
 
-                        <!-- Submit button -->
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-user-plus"></i> Đăng ký
-                            </button>
-                        </div>
+                    <div class="mb-3">
+                        <label for="dob" class="form-label">Ngày sinh (không bắt buộc)</label>
+                        <input type="date" class="form-control" id="dob" name="dob">
+                    </div>
 
-                        <p class="text-center mt-3">
-                            Đã có tài khoản? <a href="/auth/login">Đăng nhập ngay</a>
-                        </p>
-                    </form>
-                </div>
+                    <!-- Submit button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-user-plus"></i> Đăng ký
+                        </button>
+                    </div>
+
+                    <p class="text-center mt-3">
+                        Đã có tài khoản? <a href="/auth/login">Đăng nhập ngay</a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // Hàm xử lý đăng ký
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+<!-- <%- contentFor('scripts') %>
+<script>
+$(document).ready(function() {
+    $('#registerForm').submit(function(e) {
+        e.preventDefault(); // Ngăn hành động mặc định của form
+        console.log('checking'); // Kiểm tra xem sự kiện có được kích hoạt không
 
-            // Kiểm tra khớp mật khẩu
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            if (password !== confirmPassword) {
-                alert('Mật khẩu xác nhận không khớp.');
-                return;
+        // Kiểm tra khớp mật khẩu
+        const password = $('#password').val();
+        const confirmPassword = $('#confirmPassword').val();
+        if (password !== confirmPassword) {
+            Toastify({
+                text: "Mật khẩu xác nhận không khớp.",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#ff6b6b",
+            }).showToast();
+            return;
+        }
+
+        // Thu thập dữ liệu từ form
+        const formData = {
+            username: $('#username').val().trim(),
+            email: $('#email').val().trim(),
+            password: password.trim(),
+            fullname: $('#fullname').val().trim(),
+            nickname: $('#nickname').val().trim() || null,
+            dob: $('#dob').val() || null
+        };
+
+        console.log('Form data:', formData); // Kiểm tra dữ liệu được thu thập
+
+        // Gửi yêu cầu đăng ký đến server
+        fetch('/api/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Toastify({
+                    text: data.message || "Đăng ký thành công!",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#4caf50",
+                }).showToast();
+                window.location.href = '/auth/login'; // Chuyển đến trang đăng nhập
+            } else {
+                Toastify({
+                    text: data.message || "Đăng ký thất bại.",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#ff6b6b",
+                }).showToast();
             }
-
-            // Thu thập dữ liệu từ form
-            const formData = {
-                username: document.getElementById('username').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                password: password.trim(),
-                fullname: document.getElementById('fullname').value.trim(),
-                nickname: document.getElementById('nickname').value.trim() || null,
-                dob: document.getElementById('dob').value || null
-            };
-
-            try {
-                // Gửi yêu cầu đăng ký đến server
-                const response = await fetch('/api/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                const data = await response.json();
-
-                // Xử lý phản hồi
-                if (data.success) {
-                    alert(data.message || 'Đăng ký thành công!');
-                    window.location.href = '/auth/login'; // Chuyển đến trang đăng nhập
-                } else {
-                    alert(data.message || 'Đăng ký thất bại.');
-                }
-            } catch (error) {
-                console.error('Lỗi khi đăng ký:', error);
-                alert('Đã xảy ra lỗi, vui lòng thử lại.');
-            }
+        })
+        .catch(error => {
+            console.error('Lỗi khi đăng ký:', error);
+            Toastify({
+                text: "Đã xảy ra lỗi, vui lòng thử lại.",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#ff6b6b",
+            }).showToast();
         });
-    </script>
-
+    });
+});
+</script> -->

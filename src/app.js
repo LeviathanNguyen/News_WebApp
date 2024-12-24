@@ -95,7 +95,8 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRoutes);
 // app.use("/api/admin", authMiddleware.verifyToken, adminRoutes);
 app.use("/api/editor", authMiddleware.verifyToken, editorRoutes);
-
+// Admin Routes
+app.use("/admin", adminRoutes);
 // Public routes
 app.get("/", (req, res) => {
   res.render("home", {
@@ -127,8 +128,7 @@ app.get("/user/profile", authMiddleware.ensureAuthenticated, (req, res) => {
     title: "Thông Tin Cá Nhân",
   });
 });
-// Admin Routes
-app.use("/admin", adminRoutes);
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
