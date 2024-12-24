@@ -2,36 +2,51 @@
 
 <h1>Admin Dashboard</h1>
 <div class="row">
+  <!-- Người dùng -->
   <div class="col-md-3">
-    <div class="card">
-      <div class="card-body text-center">
-        <h5>Người dùng</h5>
-        <p><%= userCount %></p>
+    <a href="/admin/users" class="text-decoration-none">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5>Người dùng</h5>
+          <p><%= userCount %></p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
+
+  <!-- Bài viết -->
   <div class="col-md-3">
-    <div class="card">
-      <div class="card-body text-center">
-        <h5>Bài viết</h5>
-        <p><%= articleCount %></p>
+    <a href="/admin/articles" class="text-decoration-none">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5>Bài viết</h5>
+          <p><%= articleCount %></p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
+
+  <!-- Danh mục -->
   <div class="col-md-3">
-    <div class="card">
-      <div class="card-body text-center">
-        <h5>Danh mục</h5>
-        <p><%= categoryCount %></p>
+    <a href="/admin/categories" class="text-decoration-none">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5>Danh mục</h5>
+          <p><%= categoryCount %></p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
+
+  <!-- Tags -->
   <div class="col-md-3">
-    <div class="card">
-      <div class="card-body text-center">
-        <h5>Tags</h5>
-        <p><%= tagCount %></p>
+    <a href="/admin/tags" class="text-decoration-none">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5>Tags</h5>
+          <p><%= tagCount %></p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
 </div>
