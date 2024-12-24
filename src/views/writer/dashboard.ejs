@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <h1>Writer Dashboard</h1>
+    <a href="/writer/create" class="btn btn-primary mb-3">Write New Article</a>
+  
+    <!-- Bộ lọc trạng thái -->
+    <form method="GET" action="/writer/dashboard" class="mb-4">
+      <div class="row">
+        <div class="col-md-4">
+          <select name="status" class="form-select">
+            <option value="">Tất cả trạng thái</option>
+            <option value="draft" <%= filterStatus === "draft" ? "selected" : "" %>>Draft</option>
+            <option value="pending" <%= filterStatus === "pending" ? "selected" : "" %>>Pending</option>
+            <option value="published" <%= filterStatus === "published" ? "selected" : "" %>>Published</option>
+            <option value="rejected" <%= filterStatus === "rejected" ? "selected" : "" %>>Rejected</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary">Lọc</button>
+        </div>
+      </div>
+    </form>
+  
+    <!-- Danh sách bài viết -->
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% articles.forEach(article => { %>
+        <tr>
+          <td><%= article.title %></td>
+          <td><%= article.status %></td>
+          <td>
+            <% if (article.status === "draft" || article.status === "rejected") { %>
+            <a href="/writer/edit/<%= article.id %>" class="btn btn-warning btn-sm">Edit</a>
+            <% } else { %>
+                <span class="text-muted">No actions available</span>
+                <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  

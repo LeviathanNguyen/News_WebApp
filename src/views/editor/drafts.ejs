@@ -1,0 +1,44 @@
+<%- contentFor('body') %>
+<div class="container mt-5">
+  <h1 class="mb-4">Danh sách bài viết chờ duyệt</h1>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tiêu đề</th>
+        <th>Tác giả</th>
+        <th>Chuyên mục</th>
+        <th>Ngày tạo</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% articles.forEach((article, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= article.title %></td>
+        <td><%= article.author_name %></td>
+        <td><%= article.category_name %></td>
+        <td><%= new Date(article.created_at).toLocaleDateString() %></td>
+        <td>
+          <a
+            href="/editor/articles/<%= article.id %>"
+            class="btn btn-primary btn-sm"
+            >Xem</a
+          >
+          <a
+            href="/editor/articles/<%= article.id %>/approve"
+            class="btn btn-success btn-sm"
+            >Duyệt</a
+          >
+          <a
+            href="/editor/articles/<%= article.id %>/reject"
+            class="btn btn-danger btn-sm"
+            >Từ chối</a
+          >
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

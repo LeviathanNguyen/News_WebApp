@@ -1,0 +1,30 @@
+<%- contentFor('body') %>
+<div class="container mt-5">
+  <h1>Reject Article</h1>
+
+  <form method="POST" action="/editor/reject/<%= article.id %>">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        value="<%= article.title %>"
+        readonly
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="rejectionReason" class="form-label">Rejection Reason</label>
+      <textarea
+        class="form-control"
+        id="rejectionReason"
+        name="rejectionReason"
+        rows="4"
+        required
+      ></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Reject</button>
+  </form>
+</div>
