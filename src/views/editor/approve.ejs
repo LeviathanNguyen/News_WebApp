@@ -1,0 +1,30 @@
+<%- contentFor('body') %>
+<div class="container mt-5">
+  <h1>Approve Article</h1>
+
+  <form method="POST" action="/editor/approve/<%= article.id %>">
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        value="<%= article.title %>"
+        readonly
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="publishDate" class="form-label">Publish Date</label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        id="publishDate"
+        name="publishDate"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Approve</button>
+  </form>
+</div>

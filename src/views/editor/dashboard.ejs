@@ -1,0 +1,62 @@
+
+<%- contentFor('body') %>
+<div class="container mt-5">
+    <h1>Editor Dashboard</h1>
+  
+    <!-- Bộ lọc trạng thái -->
+    <form method="GET" action="/editor/dashboard" class="mb-4">
+      <div class="row">
+        <div class="col-md-4">
+          <select name="status" class="form-select">
+            <option value="">Tất cả trạng thái</option>
+            <option value="draft" <%= filterStatus === "draft" ? "selected" : "" %>>Draft</option>
+            <option value="pending" <%= filterStatus === "pending" ? "selected" : "" %>>Pending</option>
+            <option value="published" <%= filterStatus === "published" ? "selected" : "" %>>Published</option>
+            <option value="rejected" <%= filterStatus === "rejected" ? "selected" : "" %>>Rejected</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary">Lọc</button>
+        </div>
+      </div>
+    </form>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% articles.forEach(article => { %>
+        <tr>
+          <td><%= article.title %></td>
+          <td><%= article.author_name || "Unknown" %></td>
+          <td><%= article.category_name || "Uncategorized" %></td>
+          <td><%= article.status %></td>
+          <td>
+            <% if (article.status === "draft") { %>
+            <a
+              href="/editor/approve/<%= article.id %>"
+              class="btn btn-success btn-sm"
+              >Approve</a
+            >
+            <a
+              href="/editor/reject/<%= article.id %>"
+              class="btn btn-danger btn-sm"
+              >Reject</a
+            >
+            <% } else { %>
+            <span class="text-muted">No actions available</span>
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  

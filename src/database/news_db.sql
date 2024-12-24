@@ -82,7 +82,8 @@ CREATE TABLE articles (
     FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE, -- Relation with users
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE ON UPDATE CASCADE -- Relation with categories
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+ALTER TABLE `articles` 
+ADD COLUMN `admin_id` INT NULL AFTER `category_id`;
 -- Create article_tags table
 CREATE TABLE article_tags (
     article_id INT NOT NULL, -- Foreign key to articles table

@@ -13,6 +13,7 @@ import articleRoutes from "./routes/article.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import editorRoutes from "./routes/editor.routes.js";
+import writerRoutes from "./routes/writer.routes.js";
 import authMiddleware from "./middlewares/auth.js";
 import { errorHandler, notFound } from "./middlewares/errorHandler.js";
 
@@ -93,14 +94,31 @@ app.use((req, res, next) => {
 
 // API Routes
 app.use("/api/auth", authRoutes);
-// app.use("/api/admin", authMiddleware.verifyToken, adminRoutes);
-app.use("/api/editor", authMiddleware.verifyToken, editorRoutes);
 // Admin Routes
-app.use("/admin", adminRoutes);
+app.use(
+  "/admin",
+  authMiddleware.ensureAuthenticated,
+  authMiddleware.checkRole(["admin"]),
+  adminRoutes
+);
 // Routes
 app.use("/", articleRoutes);
+
+app.use(
+  "/editor",
+  authMiddleware.ensureAuthenticated,
+  authMiddleware.checkRole(["editor"]),
+  editorRoutes
+);
+
+app.use(
+  "/writer",
+  authMiddleware.ensureAuthenticated,
+  authMiddleware.checkRole(["writer"]),
+  writerRoutes
+);
 // Public routes
-app.get("/", (req, res) => {
+app.get("/", authMiddleware.ensureGuest, (req, res) => {
   res.render("home", {
     title: "Trang Chủ",
   });
@@ -159,6 +177,8 @@ app.listen(PORT, () => {
     Register: http://localhost:${PORT}/auth/register
     Reset:    http://localhost:${PORT}/auth/forgot-password
     Admin:    http://localhost:${PORT}/admin/dashboard
+    Editor:   http://localhost:${PORT}/editor/dashboard
+    Writer:   http://localhost:${PORT}/writer/dashboard
 
 💡 Press Ctrl + Click on the links to open in browser
 ============================================

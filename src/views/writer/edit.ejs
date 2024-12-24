@@ -1,0 +1,74 @@
+<%- contentFor('body') %>
+<div class="container mt-5">
+  <h1 class="mb-4">Chỉnh sửa bài viết</h1>
+  <form action="/writer/edit/<%= article.id %>" method="POST" enctype="multipart/form-data">
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Tiêu đề bài viết</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        value="<%= article.title %>"
+        required
+      />
+    </div>
+
+    <!-- Abstract -->
+    <div class="mb-3">
+      <label for="abstract" class="form-label">Tóm tắt</label>
+      <textarea
+        class="form-control"
+        id="abstract"
+        name="abstract"
+        rows="3"
+        required
+      ><%= article.abstract %></textarea>
+    </div>
+
+    <!-- Content -->
+    <div class="mb-3">
+      <label for="content" class="form-label">Nội dung</label>
+      <textarea
+        class="form-control"
+        id="content"
+        name="content"
+        rows="10"
+        required
+      ><%= article.content %></textarea>
+    </div>
+
+    <!-- Thumbnail -->
+    <div class="mb-3">
+      <label for="thumbnail" class="form-label">Ảnh đại diện</label>
+      <input
+        type="file"
+        class="form-control"
+        id="thumbnail"
+        name="thumbnail"
+        accept="image/*"
+      />
+      <% if (article.thumbnail) { %>
+      <p>Ảnh hiện tại: <img src="<%= article.thumbnail %>" alt="Thumbnail" style="width: 100px;" /></p>
+      <% } %>
+    </div>
+
+    <!-- Category -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Chuyên mục</label>
+      <select class="form-select" id="category" name="categoryId" required>
+        <% categories.forEach(category => { %>
+        <option value="<%= category.id %>" <%= category.id === article.category_id ? 'selected' : '' %>>
+          <%= category.name %>
+        </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary">Cập nhật bài viết</button>
+    </div>
+  </form>
+</div>
