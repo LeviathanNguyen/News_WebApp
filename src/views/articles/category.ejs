@@ -1,0 +1,24 @@
+<%- contentFor('body') %>
+<div class="container mt-5">
+  <h1>Danh sách bài viết</h1>
+  <div class="row">
+    <% articles.forEach(article => { %>
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <img
+          src="<%= article.thumbnail || '/images/default-thumbnail.jpg' %>"
+          class="card-img-top"
+          alt="<%= article.title %>"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><%= article.title %></h5>
+          <p class="card-text"><%= article.abstract %></p>
+          <a href="/article/<%= article.slug %>" class="btn btn-primary"
+            >Xem chi tiết</a
+          >
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>

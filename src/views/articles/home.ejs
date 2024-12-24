@@ -1,0 +1,32 @@
+<%- contentFor('body') %>
+
+<div class="container">
+  <h1>Bài viết nổi bật</h1>
+  <div class="row">
+    <% featuredArticles.forEach(article => { %>
+    <div class="col-md-3">
+      <div class="card">
+        <img
+          src="<%= article.thumbnail || #%>"
+          class="card-img-top"
+          alt="<%= article.title %>"
+        />
+        <div class="card-body">
+          <h5 class="card-title"><%= article.title %></h5>
+          <p class="card-text"><%= article.abstract %></p>
+          <a href="/article/<%= article.slug %>" class="btn btn-primary"
+            >Đọc tiếp</a
+          >
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+
+  <h1>Bài viết mới nhất</h1>
+  <ul>
+    <% latestArticles.forEach(article => { %>
+    <li><a href="/article/<%= article.slug %>"><%= article.title %></a></li>
+    <% }) %>
+  </ul>
+</div>

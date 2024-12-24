@@ -75,19 +75,18 @@ const authController = {
         username: user.username,
         role: user.role,
       };
-      const data = {
-        status: 200,
-        success: true,
-        message: "Đăng nhập thành công",
-        token,
-        user: {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-          fullname: user.fullname,
-        },
+
+      // Lưu dữ liệu vào session
+      req.session.user = {
+        id: user.id,
+        username: user.username,
+        role: user.role,
+        fullname: user.fullname,
+        email: user.email,
       };
-      res.render("home", { title: "Trang Chủ", data });
+
+      // Chuyển hướng về trang home
+      res.redirect("/");
     } catch (error) {
       console.error("Login error:", error);
       res.status(500).json({
