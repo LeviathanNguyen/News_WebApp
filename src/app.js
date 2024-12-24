@@ -97,6 +97,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/editor", authMiddleware.verifyToken, editorRoutes);
 // Admin Routes
 app.use("/admin", adminRoutes);
+// Routes
+app.use("/", articleRoutes);
 // Public routes
 app.get("/", (req, res) => {
   res.render("home", {

@@ -1,0 +1,54 @@
+<%- contentFor('body') %>
+<div class="container mt-5">
+  <h1>Trang chủ</h1>
+
+  <!-- Bài viết nổi bật -->
+  <section>
+    <h2>Bài viết nổi bật</h2>
+    <div class="row">
+      <% featuredArticles.forEach(article => { %>
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <img
+            src="<%= article.thumbnail || '/images/default-thumbnail.jpg' %>"
+            class="card-img-top"
+            alt="<%= article.title %>"
+          />
+          <div class="card-body">
+            <h5 class="card-title"><%= article.title %></h5>
+            <p class="card-text"><%= article.abstract %></p>
+            <a href="/article/<%= article.slug %>" class="btn btn-primary"
+              >Xem chi tiết</a
+            >
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- Bài viết mới nhất -->
+  <section>
+    <h2>Bài viết mới nhất</h2>
+    <div class="row">
+      <% latestArticles.forEach(article => { %>
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img
+            src="<%= article.thumbnail || '/images/default-thumbnail.jpg' %>"
+            class="card-img-top"
+            alt="<%= article.title %>"
+          />
+          <div class="card-body">
+            <h5 class="card-title"><%= article.title %></h5>
+            <p class="card-text"><%= article.abstract %></p>
+            <a href="/article/<%= article.slug %>" class="btn btn-primary"
+              >Xem chi tiết</a
+            >
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </section>
+</div>

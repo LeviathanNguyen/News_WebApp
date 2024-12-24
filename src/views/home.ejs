@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
+  <head>
     <title>Trang chủ</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="row mt-5">
-            <div class="col-md-8 offset-md-2">
-                <div class="card shadow">
-                    <div class="card-body text-center">
-                        <h1 class="display-4 mb-4">Chào mừng đến với Auth System</h1>
-                        
-                        <% if (locals.user) { %>
-                            <div class="alert alert-success">
-                                <h4>Xin chào, <%= user.fullname %>!</h4>
-                                <p>Bạn đã đăng nhập thành công.</p>
-                            </div>
-                            <a href="/user/profile" class="btn btn-primary">
-                                <i class="fas fa-user"></i> Xem thông tin cá nhân
-                            </a>
-                        <% } else { %>
-                            <p class="lead mb-4">Vui lòng đăng nhập hoặc đăng ký để tiếp tục</p>
-                            <div class="d-grid gap-2 col-6 mx-auto">
-                                <a href="/auth/login" class="btn btn-primary mb-2">
-                                    <i class="fas fa-sign-in-alt"></i> Đăng nhập
-                                </a>
-                                <a href="/auth/register" class="btn btn-success">
-                                    <i class="fas fa-user-plus"></i> Đăng ký
-                                </a>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
+      <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+          <div class="card shadow">
+            <div class="card-body text-center">
+              <h1 class="display-4 mb-4">Chào mừng đến với Auth System</h1>
+
+              <% if (locals.user) { %>
+              <div class="alert alert-success">
+                <h4>Xin chào, <%= user.fullname %>!</h4>
+                <p>Bạn đã đăng nhập thành công.</p>
+              </div>
+              <a href="/user/profile" class="btn btn-primary">
+                <i class="fas fa-user"></i> Xem thông tin cá nhân
+              </a>
+              <% } else { %>
+              <p class="lead mb-4">
+                Vui lòng đăng nhập hoặc đăng ký để tiếp tục
+              </p>
+              <div class="d-grid gap-2 col-6 mx-auto">
+                <a href="/auth/login" class="btn btn-primary mb-2">
+                  <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                </a>
+                <a href="/auth/register" class="btn btn-success">
+                  <i class="fas fa-user-plus"></i> Đăng ký
+                </a>
+              </div>
+              <% } %>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

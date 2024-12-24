@@ -137,6 +137,123 @@ class Article extends BaseModel {
 
     await pool.query(query, [...values, id]);
   }
+
+  // Lấy danh sách bài viết nổi bật (xem nhiều nhất)
+  static async getFeaturedArticles(limit = 4) {
+    const [rows] = await pool.execute(
+      `SELECT id, title, slug, abstract, thumbnail, view_count 
+         FROM ${this.tableName} 
+         WHERE status = 'published' 
+         ORDER BY view_count DESC LIMIT ?`,
+      [limit]
+    );
+    return rows;
+  }
+
+  // Lấy danh sách bài viết mới nhất
+  static async getLatestArticles(limit = 10) {
+    const [rows] = await pool.execute(
+      `SELECT id, title, slug, abstract, thumbnail, publish_date 
+         FROM ${this.tableName} 
+         WHERE status = 'published' 
+         ORDER BY publish_date DESC LIMIT ?`,
+      [limit]
+    );
+    return rows;
+  }
+
+  // Lấy danh sách bài viết theo chuyên mục
+  static async getArticlesByCategory(categoryId, limit = 10) {
+    const [rows] = await pool.execute(
+      `SELECT id, title, slug, abstract, thumbnail, view_count 
+         FROM ${this.tableName} 
+         WHERE category_id = ? AND status = 'published' 
+         ORDER BY publish_date DESC LIMIT ?`,
+      [categoryId, limit]
+    );
+    return rows;
+  }
+
+  static async getArticleBySlug(slug) {
+    if (!slug) {
+      throw new Error("Slug must be provided.");
+    }
+
+    const sql = `
+        SELECT a.*, u.full_name as author_name, c.name as category_name
+        FROM articles a
+        JOIN users u ON a.author_id = u.id
+        JOIN categories c ON a.category_id = c.id
+        WHERE a.slug = ? AND a.status = 'published'
+    `;
+
+    const [rows] = await pool.execute(sql, [slug]);
+    return rows[0]; // Trả về bài viết đầu tiên
+  }
+  static async getAllArticles(categoryId = null, query = null) {
+    let sql = `
+        SELECT 
+            a.*, 
+            u.full_name AS author_name, 
+            u.pen_name AS author_pen_name, 
+            c.name AS category_name
+        FROM 
+            articles a
+        LEFT JOIN 
+            users u ON a.author_id = u.id
+        LEFT JOIN 
+            categories c ON a.category_id = c.id
+        WHERE 
+            a.status = 'published'
+    `;
+
+    const values = [];
+
+    // Nếu có categoryId, thêm điều kiện lọc theo chuyên mục
+    if (categoryId) {
+      sql += ` AND a.category_id = ?`;
+      values.push(categoryId);
+    }
+
+    // Nếu có query, thêm điều kiện tìm kiếm
+    if (query) {
+      sql += ` AND (a.title LIKE ? OR a.abstract LIKE ? OR a.content LIKE ?)`;
+      const searchQuery = `%${query}%`;
+      values.push(searchQuery, searchQuery, searchQuery);
+    }
+
+    // Sắp xếp theo ngày publish
+    sql += ` ORDER BY a.publish_date DESC`;
+
+    // Thực thi truy vấn
+    const [rows] = await pool.execute(sql, values);
+    return rows;
+  }
+
+  static async searchArticles(query) {
+    const sql = `
+        SELECT 
+            a.*, 
+            u.full_name AS author_name, 
+            u.pen_name AS author_pen_name, 
+            c.name AS category_name
+        FROM 
+            articles a
+        LEFT JOIN 
+            users u ON a.author_id = u.id
+        LEFT JOIN 
+            categories c ON a.category_id = c.id
+        WHERE 
+            (a.title LIKE ? OR a.abstract LIKE ? OR a.content LIKE ?)
+            AND a.status = 'published'
+        ORDER BY 
+            a.publish_date DESC
+    `;
+
+    const values = [`%${query}%`, `%${query}%`, `%${query}%`];
+    const [rows] = await pool.execute(sql, values);
+    return rows;
+  }
 }
 
 export default Article;
