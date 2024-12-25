@@ -334,7 +334,7 @@ class Article extends BaseModel {
     let sql = `
       SELECT 
         a.*, 
-        u.full_name AS author_name, 
+        u.username AS author_name, 
         c.name AS category_name
       FROM 
         articles a

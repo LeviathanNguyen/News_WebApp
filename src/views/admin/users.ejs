@@ -1,5 +1,21 @@
 <%- contentFor('body') %>
 <h1>Quản lý Người dùng</h1>
+<!-- Button để thêm người dùng -->
+<div class="mb-4">
+  <a href="/admin/user-add" class="btn btn-primary">Thêm Người dùng</a>
+</div>
+<form action="/admin/users" method="GET" class="mb-4">
+  <label for="roleFilter">Lọc theo vai trò:</label>
+  <select id="roleFilter" name="role" class="form-control d-inline w-auto">
+    <option value="">Tất cả</option>
+    <option value="guest">Guest</option>
+    <option value="subscriber">Subscriber</option>
+    <option value="writer">Writer</option>
+    <option value="editor">Editor</option>
+    <option value="admin">Admin</option>
+  </select>
+  <button type="submit" class="btn btn-secondary">Lọc</button>
+</form>
 <table class="table">
   <thead>
     <tr>
@@ -13,7 +29,18 @@
     <tr>
       <td><%= user.username %></td>
       <td><%= user.email %></td>
-      <td><%= user.role %></td>
+      <td>
+        <!-- Dropdown để chỉnh sửa vai trò -->
+        <form action="/admin/users/<%= user.id %>/update-role" method="POST" class="d-inline">
+          <select name="role" class="form-control" onchange="this.form.submit()">
+            <option value="guest" <%= user.role === 'guest' ? 'selected' : '' %>>Guest</option>
+            <option value="subscriber" <%= user.role === 'subscriber' ? 'selected' : '' %>>Subscriber</option>
+            <option value="writer" <%= user.role === 'writer' ? 'selected' : '' %>>Writer</option>
+            <option value="editor" <%= user.role === 'editor' ? 'selected' : '' %>>Editor</option>
+            <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+          </select>
+        </form>
+      </td>
     </tr>
     <% }) %>
   </tbody>

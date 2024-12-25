@@ -250,3 +250,172 @@ body {
     opacity: 1;
   }
 }
+/* Input group with icons */
+.input-group-text {
+  background-color: transparent;
+  border-right: none;
+}
+
+.input-group .form-control {
+  border-left: none;
+}
+
+/* Custom checkbox style */
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+/* Link hover effects */
+a {
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #0a58ca;
+}
+/*
+General Styles
+:root {
+    --primary-color: #1a73e8;
+    --secondary-color: #5f6368;
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, -apple-system, sans-serif;
+    line-height: 1.6;
+    color: #202124;
+}
+
+Smooth Scrolling
+html {
+    scroll-behavior: smooth;
+}
+
+Navigation Animations
+.navbar-nav .nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    transition: color var(--transition-speed);
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--primary-color);
+    transition: all var(--transition-speed);
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+Article Card Styles
+.article-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.article-card img {
+    transition: transform var(--transition-speed);
+}
+
+.article-card:hover img {
+    transform: scale(1.05);
+}
+
+Premium Content Badge
+.premium-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 0, 0.9);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { opacity: 0.8; };
+    50% { opacity: 1; };
+    100% { opacity: 0.8; };
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+*/
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+/* Căn chỉnh tổng thể của container */
+.mb-3 {
+  margin-bottom: 1.5rem;
+}
+
+/* Tùy chỉnh label */
+.form-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Tùy chỉnh giao diện của select */
+/* Đảm bảo áp dụng màu đen cho select */
+.custom-select {
+  color: #000 !important; /* Sử dụng !important để đảm bảo ưu tiên */
+}
+
+/* Áp dụng màu cho các option */
+.custom-select option {
+  color: #000 !important;
+}
+/* 

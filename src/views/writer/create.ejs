@@ -64,17 +64,23 @@
       </select>
     </div>
 
-    <!-- Admin ID -->
     <div class="mb-3">
-      <label for="adminId" class="form-label">ID Admin</label>
-      <input
-        type="number"
-        class="form-control"
-        id="adminId"
-        name="adminId"
-        placeholder="Nhập ID của admin"
-        min="1"
-      />
+      <label for="adminId" class="form-label">Editor</label>
+      <select class="form-select custom-select" id="adminId" name="adminId">
+        <option value="" selected disabled>Chọn Editor</option>
+        <% admins.forEach(admin => { %>
+        <option value="<%= admin.id %>"><%= admin.username %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <!-- Premium Article -->
+    <div class="mb-3">
+      <label for="isPremium" class="form-label">Bài viết Premium</label>
+      <select class="form-select" id="isPremium" name="isPremium" required>
+        <option value="0">Không</option>
+        <option value="1">Có</option>
+      </select>
     </div>
 
     <!-- Submit Button -->

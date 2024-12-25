@@ -3,7 +3,7 @@
 
 
 <!-- Form thêm Article -->
-<form
+<!-- <form
   action="/admin/articles"
   method="POST"
   class="mb-4"
@@ -76,7 +76,7 @@
   </div>
 
   <button type="submit" class="btn btn-primary mt-2">Thêm Article</button>
-</form>
+</form> -->
 
 
 <!-- Danh sách Articles -->
@@ -91,7 +91,7 @@
         <th>Ngày đăng</th>
         <th>Views</th>
         <th>Tác giả</th>
-        <th>Hành động</th>
+        <!-- <th>Hành động</th> -->
       </tr>
     </thead>
     <tbody>
@@ -140,9 +140,9 @@
         </td>
         <td><%= article.view_count %></td>
         <td><%= article.author_name %></td>
-        <td>
+        <!-- <td>
           <a href="/admin/article-edit/<%= article.id %>" class="btn btn-sm btn-warning">Sửa</a>
-        </td>
+        </td> -->
       </tr>
       <% }); %>
     </tbody>
