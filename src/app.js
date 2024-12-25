@@ -14,6 +14,7 @@ import authRoutes from "./routes/auth.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import editorRoutes from "./routes/editor.routes.js";
 import writerRoutes from "./routes/writer.routes.js";
+
 import authMiddleware from "./middlewares/auth.js";
 import { errorHandler, notFound } from "./middlewares/errorHandler.js";
 

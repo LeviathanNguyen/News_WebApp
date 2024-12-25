@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/levi/Workspaces/Web/News_WebApp_v2/src/logs/.7a4cc6f415afcb5997224d92a30f7fa96fae4ef8-audit.json",
+    "files": [
+        {
+            "date": 1735056739425,
+            "name": "/home/levi/Workspaces/Web/News_WebApp_v2/src/logs/24-12-2024-combined.log",
+            "hash": "3bb3a2d9ffc1a2a10c6f26d4cb9289dc24502f6de38cd14d7929f43c884a5f85"
+        },
+        {
+            "date": 1735062624457,
+            "name": "/home/levi/Workspaces/Web/News_WebApp_v2/src/logs/25-12-2024-combined.log",
+            "hash": "edc3fdc06603af3231d1b7584ba9ef251b474d14eafb900ba79b625a04ca0d0c"
+        }
+    ],
+    "hashType": "sha256"
+}

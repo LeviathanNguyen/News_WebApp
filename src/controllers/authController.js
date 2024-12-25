@@ -1,7 +1,7 @@
 import "dotenv/config";
-import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import User from "../models/User.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 const SESSION_EXPIRES = process.env.SESSION_EXPIRES || "24h"; // Thời hạn JWT

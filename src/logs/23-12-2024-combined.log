@@ -20,3 +20,32 @@ Require stack:
 - /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/view.js
 - /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js
 - /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/express.js
+23-12-2024 12:59:24 info: Database pool connections closed
+23-12-2024 12:59:27 info: Database pool created successfully
+23-12-2024 12:59:27 info: ✅ Database connected successfully
+23-12-2024 12:59:50 info: Database pool connections closed
+23-12-2024 12:59:57 info: Database pool created successfully
+23-12-2024 12:59:57 info: ✅ Database connected successfully
+23-12-2024 22:19:29 info: Database pool created successfully
+23-12-2024 22:19:30 info: ✅ Database connected successfully
+23-12-2024 22:19:37 error: Application Error Cannot find module 'ejs'
+Require stack:
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/view.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/express.js
+23-12-2024 22:19:43 error: Application Error Cannot find module 'ejs'
+Require stack:
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/view.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/application.js
+- /home/levi/Workspaces/Web/News_WebApp/node_modules/express/lib/express.js
+23-12-2024 22:20:22 info: Database pool connections closed
+23-12-2024 22:20:36 info: Database pool created successfully
+23-12-2024 22:20:36 info: ✅ Database connected successfully
+23-12-2024 22:20:41 error: Application Error Cannot set headers after they are sent to the client
+23-12-2024 22:20:57 error: Application Error Cannot set headers after they are sent to the client
+23-12-2024 22:21:17 error: Application Error Cannot set headers after they are sent to the client
+23-12-2024 22:23:27 error: Application Error Cannot set headers after they are sent to the client
+23-12-2024 22:23:30 error: Application Error Cannot set headers after they are sent to the client
+23-12-2024 22:23:32 error: Application Error Cannot set headers after they are sent to the client
+23-12-2024 22:23:33 error: Application Error Cannot set headers after they are sent to the client
+23-12-2024 22:23:39 error: Application Error Cannot set headers after they are sent to the client

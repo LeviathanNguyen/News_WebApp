@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\LENOVO\\Desktop\\News_WebApp\\src\\logs\\.dfc8e7a2e4de96db58b8115a207fe2a2de74c975-audit.json",
+    "files": [
+        {
+            "date": 1735096780145,
+            "name": "C:\\Users\\LENOVO\\Desktop\\News_WebApp\\src\\logs\\25-12-2024-combined.log",
+            "hash": "19079ff02faaf911c90811acc5de00b1cdd1127ffd4f6501464b2caa5874d3ce"
+        }
+    ],
+    "hashType": "sha256"
+}
