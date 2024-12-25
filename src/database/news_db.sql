@@ -93,36 +93,148 @@ CREATE TABLE article_tags (
     FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE -- Relation with tags
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Insert sample data into users table
+-- Insert sample data into users table, pass: Anh1102@
 INSERT INTO users (username, email, password, full_name, pen_name, role, date_of_birth) VALUES
-('admin','admin@gmail.com','$2b$10$k03AWD91J481Q/efjYrDh.oZgNuEUl7dXHlDVomgINBHz7RFuRkru','admin','admin','admin',NULL), --pass: Anh1102@
-('johndoe', 'johndoe@example.com', 'hashedpassword123', 'John Doe', 'JD', 'writer', '1990-01-01'),
-('janedoe', 'janedoe@example.com', 'hashedpassword123', 'Jane Doe', 'JD', 'editor', '1985-05-15'),
-('guestuser', 'guestuser@example.com', 'hashedpassword123', 'Guest User', NULL, 'guest', NULL);
+("johndoe", "johndoe@example.com", "hashedpassword123", "John Doe", "JD", "writer", "1990-01-01"),
+("janedoe", "janedoe@example.com", "hashedpassword123", "Jane Doe", "JD", "editor", "1985-05-15"),
+("admin","admin@gmail.com","$2b$10$k03AWD91J481Q/efjYrDh.oZgNuEUl7dXHlDVomgINBHz7RFuRkru","admin","admin","admin",NULL),
+("guestuser", "guestuser@example.com", "hashedpassword123", "Guest User", NULL, "guest", NULL);
 
 -- Insert sample data into categories table
 INSERT INTO categories (name, description) VALUES
-('Technology', 'Latest trends and news in technology.'),
-('Science', 'Discoveries and updates in science.'),
-('Health', 'Tips and news about health and wellness.'),
-('Business', 'News related to business and economy.'),
-('Entertainment', 'Latest happenings in the entertainment industry.');
+("AI", "Topics related to artificial intelligence, machine learning, and AI applications in daily life"),
+("Blockchain", "Blockchain technology, cryptocurrency, and decentralized applications (DApps)"),
+("Startups", "News about startup companies, innovation, and the startup ecosystem"),
+("Weather", "Climate change, environmental issues, and sustainable development solutions"),
+("Fitness", "Topics about exercise, sports, health training, and healthy lifestyle"),
+("Movies", "Film news, movie reviews, and entertainment industry trends"),
+("Education", "Education, training, e-learning, and modern learning methods"),
+("Sports", "Professional sports, tournaments, and sports news"),
+("Technology", "New technology trends, gadgets, and innovations in the tech field"),
+("Health", "Health advice, nutrition, and healthcare guidelines"),
+("Business", "Business news, markets, and economic trends"),
+("Science", "New scientific discoveries, breakthrough research, and advances in science"),
+("Entertainment", "Entertainment news, showbiz, and cultural events");
 
 -- Insert sample data into tags table
 INSERT INTO tags (name) VALUES
-('AI'), ('Blockchain'), ('Startups'), ('Climate Change'), ('Fitness'), ('Movies');
+("AI"), ("Blockchain"), ("Startups"), ("Weather"), ("Fitness"), ("Movies"), ("Education"),
+("Sports"), ("Technology"), ("Health"), ("Business"), ("Science"), ("Entertainment");
 
 -- Insert sample data into articles table
-INSERT INTO articles (title, slug, abstract, content, thumbnail, status, is_premium, publish_date, view_count, author_id, category_id) VALUES
-('The Rise of AI in Everyday Life', 'the-rise-of-ai-in-everyday-life', 'Artificial Intelligence is changing the world.', 'Full content about AI here...', NULL, 'published', TRUE, '2024-12-01', 120, 1, 1),
-('Blockchain Beyond Cryptocurrency', 'blockchain-beyond-cryptocurrency', 'Blockchain technology explained.', 'Full content about Blockchain here...', NULL, 'published', FALSE, '2024-12-02', 85, 1, 1),
-('Top 10 Startups to Watch in 2024', 'top-10-startups-to-watch-in-2024', 'An overview of innovative startups.', 'Full content about Startups here...', NULL, 'published', FALSE, '2024-12-10', 200, 2, 2),
-('The Effects of Climate Change', 'the-effects-of-climate-change', 'Climate change and its impacts.', 'Full content about Climate Change here...', NULL, 'pending', FALSE, NULL, 0, 2, 2),
-('Fitness Tips for a Healthy Life', 'fitness-tips-for-a-healthy-life', 'Tips to maintain good health.', 'Full content about Fitness here...', NULL, 'published', FALSE, '2024-11-25', 150, 1, 3);
+INSERT INTO articles (title, slug, abstract, content, status, is_premium, publish_date, view_count, author_id, category_id) VALUES
+("The Impact of 5G Technology on Smart Cities", 
+"impact-5g-technology-smart-cities", 
+"How 5G is revolutionizing urban development and creating smarter cities",
+"Detailed exploration of how 5G networks are enabling smart city initiatives, from traffic management to waste collection...",
+"published", TRUE, "2024-12-15", 180, 1, 1),
+
+("Quantum Computing: A New Era of Technology", 
+"quantum-computing-new-era", 
+"Understanding the revolutionary potential of quantum computing",
+"In-depth analysis of quantum computing principles and their potential applications in various industries...",
+"published", FALSE, "2024-12-16", 150, 2, 1),
+
+("Cybersecurity Trends for 2025", 
+"cybersecurity-trends-2025", 
+"Essential cybersecurity measures for the coming year",
+"Comprehensive overview of emerging cybersecurity threats and defense strategies...",
+"published", TRUE, "2024-12-17", 200, 1, 1);
+
+
+INSERT INTO articles (title, slug, abstract, content, status, is_premium, publish_date, view_count, author_id, category_id) VALUES
+("Breakthroughs in Renewable Energy Storage", 
+"renewable-energy-storage-breakthroughs", 
+"New technologies revolutionizing renewable energy storage",
+"Detailed analysis of recent innovations in energy storage technology...",
+"published", FALSE, "2024-12-15", 160, 2, 2),
+
+("Mars Colonization: Latest Developments", 
+"mars-colonization-latest-developments", 
+"Updates on humanity's progress toward Mars colonization",
+"Comprehensive coverage of recent advances in Mars colonization technology...",
+"published", TRUE, "2024-12-16", 220, 1, 2),
+
+("Ocean Conservation Technologies", 
+"ocean-conservation-technologies", 
+"New technologies helping to preserve marine ecosystems",
+"In-depth look at innovative solutions for ocean conservation...",
+"published", FALSE, "2024-12-17", 175, 2, 2);
+
+
+INSERT INTO articles (title, slug, abstract, content, status, is_premium, publish_date, view_count, author_id, category_id) VALUES
+("Mental Health in the Digital Age", 
+"mental-health-digital-age", 
+"Managing mental wellness in an increasingly connected world",
+"Comprehensive guide to maintaining mental health in the modern digital landscape...",
+"published", TRUE, "2024-12-15", 190, 1, 3),
+
+("Nutrition Myths Debunked", 
+"nutrition-myths-debunked", 
+"Scientific analysis of common nutrition misconceptions",
+"Evidence-based examination of popular nutrition claims and myths...",
+"published", FALSE, "2024-12-16", 165, 2, 3),
+
+("Breakthrough in Alzheimer's Research", 
+"alzheimers-research-breakthrough", 
+"New discoveries in Alzheimer's disease treatment",
+"Detailed coverage of recent advances in Alzheimer's disease research...",
+"published", TRUE, "2024-12-17", 210, 1, 3);
+
+
+INSERT INTO articles (title, slug, abstract, content, status, is_premium, publish_date, view_count, author_id, category_id) VALUES
+("Sustainable Business Practices in 2025", 
+"sustainable-business-practices-2025", 
+"How businesses are adapting to environmental challenges",
+"Analysis of successful sustainable business strategies and their implementation...",
+"published", TRUE, "2024-12-15", 175, 2, 4),
+
+("The Rise of Digital Currencies in Global Trade", 
+"digital-currencies-global-trade", 
+"Impact of digital currencies on international commerce",
+"Comprehensive examination of how digital currencies are transforming global trade...",
+"published", FALSE, "2024-12-16", 195, 1, 4),
+
+("AI in Business Decision Making", 
+"ai-business-decision-making", 
+"How AI is revolutionizing corporate strategy",
+"In-depth analysis of AI applications in business strategy and decision-making...",
+"published", TRUE, "2024-12-17", 185, 2, 4);
+
+
+INSERT INTO articles (title, slug, abstract, content, status, is_premium, publish_date, view_count, author_id, category_id) VALUES
+("The Evolution of Streaming Platforms", 
+"evolution-streaming-platforms", 
+"How streaming services are changing entertainment consumption",
+"Detailed analysis of the streaming industry's impact on entertainment...",
+"published", FALSE, "2024-12-15", 230, 1, 5),
+
+("Virtual Reality in Gaming: 2025 Outlook", 
+"virtual-reality-gaming-2025", 
+"The future of gaming technology and virtual reality",
+"Comprehensive overview of VR gaming trends and future developments...",
+"published", TRUE, "2024-12-16", 200, 2, 5),
+
+("The Rise of Independent Content Creators", 
+"rise-independent-content-creators", 
+"How social media is transforming entertainment",
+"In-depth look at the growing influence of independent content creators...",
+"published", FALSE, "2024-12-17", 185, 1, 5);
 
 -- Insert sample data into article_tags table
 INSERT INTO article_tags (article_id, tag_id) VALUES
-(1, 1), (1, 2),
-(2, 2), (2, 3),
-(3, 3), (3, 4),
-(4, 4), (5, 5);
+(1, 1), (1, 3), -- Technology articles
+(2, 1), (2, 2),
+(3, 1), (3, 5),
+(4, 4), (4, 6), -- Science articles
+(5, 3), (5, 4),
+(6, 4), (6, 5),
+(7, 5), (7, 7), -- Health articles
+(8, 5), (8, 1),
+(9, 5), (9, 6),
+(10, 2), (10, 3), -- Business articles
+(11, 2), (11, 4),
+(12, 1), (12, 3),
+(13, 6), (13, 7), -- Entertainment articles
+(14, 6), (14, 1),
+(15, 6), (15, 7);
