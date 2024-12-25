@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import Article from "../models/Article.js";
 import Category from "../models/Category.js";
 import Tag from "../models/Tag.js";
+import bcrypt from "bcrypt";
 const adminController = {
   // Dashboard
   async getDashboard(req, res) {
@@ -118,7 +119,7 @@ const adminController = {
       } = req.body;
 
       // Gọi model để thêm bài viết
-      await Article.create({
+      await Article.createArticle({
         title,
         abstract,
         content,
@@ -196,6 +197,7 @@ const adminController = {
   },
 
   async updateArticle(req, res) {
+    console.log(req.body);
     try {
       const { id } = req.params; // Lấy ID bài viết từ URL
       const {
@@ -222,6 +224,71 @@ const adminController = {
       res.redirect("/admin/articles"); // Chuyển hướng về danh sách bài viết
     } catch (error) {
       console.error("Error updating article:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  async filterUsersByRole(req, res) {
+    try {
+      const { role } = req.query; // Lấy vai trò từ query parameter
+      const filters = {};
+
+      // Chỉ thêm điều kiện role nếu có
+      if (role) {
+        filters.role = role;
+      }
+
+      // Truy vấn với bộ lọc
+      const users = await User.search(filters, 100, 0);
+
+      res.render("admin/users", { title: "Manage Users", users });
+    } catch (error) {
+      console.error("Error filtering users by role:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  async addUser(req, res) {
+    try {
+      const { username, email, password, role } = req.body;
+
+      // Kiểm tra nếu không có password
+      if (!password || password.length < 6) {
+        throw new Error("Mật khẩu phải có ít nhất 6 ký tự");
+      }
+
+      // Tạo người dùng mới với mật khẩu đã băm
+      await User.adminCreateUser({
+        username,
+        email,
+        password,
+        role,
+      });
+
+      res.redirect("/admin/users");
+    } catch (error) {
+      console.error("Error adding user:", error);
+      res.status(500).send(`Lỗi: ${error.message}`);
+    }
+  },
+
+  async updateUserRole(req, res) {
+    try {
+      const { id } = req.params; // ID người dùng
+      const { role } = req.body; // Vai trò mới
+
+      // Kiểm tra vai trò hợp lệ
+      const validRoles = ["guest", "subscriber", "writer", "editor", "admin"];
+      if (!validRoles.includes(role)) {
+        throw new Error("Vai trò không hợp lệ");
+      }
+
+      // Cập nhật vai trò
+      await User.update(id, { role });
+
+      res.redirect("/admin/users"); // Chuyển hướng lại trang người dùng
+    } catch (error) {
+      console.error("Error updating user role:", error);
       res.status(500).send("Internal Server Error");
     }
   },

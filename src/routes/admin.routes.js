@@ -1,15 +1,27 @@
 import e from "express";
 import adminController from "../controllers/adminController.js";
 const router = e.Router();
-
+import multer from "multer";
+const upload = multer({ storage: multer.memoryStorage() });
 router.get("/admin", (req, res) => {
   res.send("Administation route");
 });
 router.get("/dashboard", adminController.getDashboard);
 
 // Manage Users
-router.get("/users", adminController.getUsers);
-router.post("/users", adminController.addUser);
+// Trang quản lý người dùng
+router.get("/users", adminController.filterUsersByRole);
+
+// Trang thêm người dùng
+router.get("/user-add", (req, res) => {
+  res.render("admin/user-add", { title: "Thêm Người dùng" });
+});
+
+// Thêm người dùng mới
+router.post("/user-add", adminController.addUser);
+
+// Cập nhật vai trò người dùng
+router.post("/users/:id/update-role", adminController.updateUserRole);
 
 // Manage Categories
 router.get("/categories", adminController.getCategories);

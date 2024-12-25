@@ -15,7 +15,7 @@ const EditorController = {
         editorId,
         status
       );
-
+      console.log(articles);
       res.render("editor/dashboard", {
         title: "Editor Dashboard",
         articles,

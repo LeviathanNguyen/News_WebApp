@@ -55,10 +55,10 @@ class User extends BaseModel {
 
       // Truy vấn SQL để chèn người dùng mới
       const sql = `
-            INSERT INTO users 
-            (username, email, password, full_name, pen_name, date_of_birth, role, created_at, updated_at) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
-        `;
+              INSERT INTO users 
+              (username, email, password, full_name, pen_name, date_of_birth, role, created_at, updated_at) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+          `;
       const values = [
         data.username,
         data.email,
@@ -153,13 +153,86 @@ class User extends BaseModel {
     try {
       const [user] = await pool.execute(
         `SELECT * FROM ${this.tableName} 
-                WHERE reset_token = ? 
-                AND reset_token_expires > NOW()`,
+                  WHERE reset_token = ? 
+                  AND reset_token_expires > NOW()`,
         [token]
       );
       return user[0] || null;
     } catch (error) {
       throw new Error(`Không thể tìm token reset: ${error.message}`);
+    }
+  }
+
+  static async search(filters = {}, limit = 10, offset = 0) {
+    const conditions = ["id <> 1"]; // Bắt đầu với điều kiện mặc định id <> 1
+    const values = [];
+
+    // Xây dựng các điều kiện WHERE từ filters
+    for (const [key, value] of Object.entries(filters)) {
+      conditions.push(`${key} = ?`);
+      values.push(value);
+    }
+
+    // Kết hợp các điều kiện thành một chuỗi WHERE
+    const whereClause = `WHERE ${conditions.join(" AND ")}`;
+
+    // Câu truy vấn SQL
+    const sql = `
+          SELECT * FROM ${this.tableName}
+          ${whereClause}
+      `;
+
+    // Thêm limit và offset vào values
+    // values.push(limit, offset);
+
+    // Thực thi truy vấn SQL
+    const [rows] = await pool.execute(sql, values);
+    return rows;
+  }
+
+  static async adminCreateUser(data) {
+    try {
+      // Validate dữ liệu đầu vào
+      await this.validate(data);
+
+      // Băm mật khẩu nếu có
+      if (data.password) {
+        data.password = await this.hashPassword(data.password);
+      }
+
+      // Chuẩn bị dữ liệu với giá trị mặc định
+      const username = data.username || null;
+      const email = data.email || null;
+      const password = data.password || null;
+      const fullname = data.fullname || null;
+      const nickname = data.nickname || null;
+      const dob = data.dob || null;
+      const role = data.role || "guest";
+
+      // Truy vấn SQL để chèn người dùng mới
+      const sql = `
+              INSERT INTO users 
+              (username, email, password, full_name, pen_name, date_of_birth, role, created_at, updated_at) 
+              VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+          `;
+      const values = [username, email, password, fullname, nickname, dob, role];
+
+      // Thực thi truy vấn
+      const [result] = await pool.execute(sql, values);
+
+      // Trả về thông tin người dùng mới (trừ mật khẩu)
+      return {
+        id: result.insertId,
+        username,
+        email,
+        fullname,
+        nickname,
+        dob,
+        role,
+      };
+    } catch (error) {
+      console.error("Error creating user:", error.message);
+      throw new Error(`Không thể tạo người dùng: ${error.message}`);
     }
   }
 }

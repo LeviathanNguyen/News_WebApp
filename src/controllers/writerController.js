@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import slugify from "slugify";
 import Category from "../models/Category.js";
+import User from "../models/User.js";
 // Define __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,7 +24,6 @@ const WriterController = {
         userId,
         status
       );
-
       res.render("writer/dashboard", {
         title: "Writer Dashboard",
         articles,
@@ -48,18 +48,19 @@ const WriterController = {
   // Submit new article
   async createArticle(req, res) {
     try {
-      const { title, abstract, content, categoryId, adminId } = req.body; // Thêm adminId
+      const { title, abstract, content, categoryId, adminId, isPremium } =
+        req.body;
       const userId = req.session.user.id;
       let thumbnailPath = null;
 
-      // Kiểm tra adminId chỉ chứa số
+      // Validate adminId
       if (adminId && isNaN(adminId)) {
-        return res.status(400).send("Admin ID phải là số.");
+        return res.status(400).send("Editor ID phải là số.");
       }
 
       // Handle file upload
       if (req.file) {
-        const uploadDir = path.join(__dirname, "../public/uploads"); // Path to upload directory
+        const uploadDir = path.join(__dirname, "../public/uploads");
         if (!fs.existsSync(uploadDir)) {
           fs.mkdirSync(uploadDir, { recursive: true });
         }
@@ -71,7 +72,7 @@ const WriterController = {
       // Generate slug
       const slug = slugify(title, { lower: true, strict: true });
 
-      // Tạo bài viết
+      // Create article
       await Article.create({
         title,
         slug,
@@ -80,7 +81,8 @@ const WriterController = {
         thumbnail: thumbnailPath,
         category_id: categoryId,
         author_id: userId,
-        admin_id: adminId || null, // Lưu adminId hoặc null nếu không có giá trị
+        admin_id: adminId || null,
+        is_premium: isPremium === "1", // Chuyển thành boolean
         status: "draft",
       });
 
@@ -90,7 +92,6 @@ const WriterController = {
       res.status(500).render("errors/500", { title: "Error" });
     }
   },
-
   // Edit article page
   async editArticlePage(req, res) {
     try {
